@@ -32,4 +32,4 @@
 - Removed tracked generated job and trajectory logs from the reusable gym.
 
 ## Stop Justification
-- Final verification complete at milestone `core_claim_plus`.
+- Completed at milestone `core_claim_plus`.
