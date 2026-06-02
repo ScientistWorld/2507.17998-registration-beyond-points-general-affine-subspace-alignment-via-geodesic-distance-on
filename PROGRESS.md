@@ -56,9 +56,9 @@ path for plane-to-plane registration.
 
 ## Issues
 
-The latest job logs are available under `jobs/bd5de5ed-df6/`.  The stdout log
-contains the successful validation table and the stderr log only contains Hive
-metadata.
+Generated scheduler logs are intentionally not tracked in git; validation
+status is recorded in `MILESTONES.md`, `VERIFICATION.md`, and the committed
+score files.
 
 Continuation audit found a script portability issue: shell entry points used
 `python`, which was shadowed by a Node-managed shim in the login environment

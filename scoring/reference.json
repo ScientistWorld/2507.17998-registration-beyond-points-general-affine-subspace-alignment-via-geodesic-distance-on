@@ -2,6 +2,7 @@
     "experiments": {
         "synthetic_plane_registration_clean": {
             "description": "Scaled Sec. 5.1 plane-to-plane registration without fitted-point outliers.",
+            "notes": "The paper reports the Space Station object-registration result as a curve rather than an extractable numeric table. These values are measured targets on this gym's fixed synthetic 13-plane analogue.",
             "weight": 0.25,
             "primary_metric": "translation_error_percent",
             "metrics": {
@@ -45,6 +46,7 @@
         },
         "synthetic_plane_registration": {
             "description": "Scaled Sec. 5.1 plane-to-plane object registration with noisy fitted planes and antipodal parameter ambiguity.",
+            "notes": "The paper reports the Space Station object-registration result as a curve rather than an extractable numeric table. These values are measured targets on this gym's fixed synthetic 13-plane analogue with 5 percent fitted-point outliers.",
             "weight": 0.5,
             "primary_metric": "translation_error_percent",
             "metrics": {
@@ -88,6 +90,7 @@
         },
         "synthetic_plane_registration_outlier_0.10": {
             "description": "Scaled Sec. 5.1 plane-to-plane registration with 10 percent fitted-point outliers.",
+            "notes": "The paper reports the Space Station object-registration result as a curve rather than an extractable numeric table. These values are measured targets on this gym's fixed synthetic 13-plane analogue with 10 percent fitted-point outliers.",
             "weight": 0.25,
             "primary_metric": "translation_error_percent",
             "metrics": {

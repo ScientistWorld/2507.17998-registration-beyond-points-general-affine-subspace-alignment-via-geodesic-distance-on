@@ -26,5 +26,10 @@
 - Updated `reference.json`, `scores.json`, and `TARGETS.md` so scored metrics and documentation agree.
 - Updated `scripts/run.sh` to regenerate canonical `scoring/scores.json` before the supplemental split diagnostics; submitting a CPU verification job.
 
+### [2026-06-02 17:59] - core_claim_plus
+- Final verification confirmed `validate.py --compare` passes and the latest CPU verification job completed with return code 0.
+- Tightened method-agnostic evaluation documentation and added explicit `reference.json` notes for the scaled synthetic target values.
+- Removed tracked generated job and trajectory logs from the reusable gym.
+
 ## Stop Justification
-- Not stopped this turn; a CPU verification job is pending for the packaging fix.
+- Final verification complete at milestone `core_claim_plus`.
