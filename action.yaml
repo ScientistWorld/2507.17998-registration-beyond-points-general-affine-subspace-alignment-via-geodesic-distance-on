@@ -2,4 +2,4 @@ action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Validation passed after correcting reference baselines to reproduced full-suite values; even/odd split has 24 train values and 24 test values, with comparable non-identical train/test scores."
+notes: "Packaging audit passed: no external artifacts are required, download.sh is an idempotent no-op, and no shared paths were found."
