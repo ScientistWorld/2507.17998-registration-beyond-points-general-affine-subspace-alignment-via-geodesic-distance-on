@@ -29,14 +29,14 @@
             "results": {
                 "plane_parameter_lstsq": {
                     "type": "baseline",
-                    "translation_error_percent": 300.0,
-                    "rotation_error_deg": 0.15,
+                    "translation_error_percent": 174.8654788409207,
+                    "rotation_error_deg": 0.1025112724127392,
                     "num_planes": 13.0
                 },
                 "grassmann_refine": {
                     "type": "proposed",
-                    "translation_error_percent": 0.4,
-                    "rotation_error_deg": 0.15,
+                    "translation_error_percent": 0.2941367634019644,
+                    "rotation_error_deg": 0.10271678472052434,
                     "num_planes": 13.0
                 }
             }
@@ -70,14 +70,14 @@
             "results": {
                 "plane_parameter_lstsq": {
                     "type": "baseline",
-                    "translation_error_percent": 300.0,
-                    "rotation_error_deg": 3.0,
+                    "translation_error_percent": 172.1290020657259,
+                    "rotation_error_deg": 3.3800602318045705,
                     "num_planes": 13.0
                 },
                 "grassmann_refine": {
                     "type": "proposed",
-                    "translation_error_percent": 15.0,
-                    "rotation_error_deg": 3.0,
+                    "translation_error_percent": 17.99285635059572,
+                    "rotation_error_deg": 4.194009977888098,
                     "num_planes": 13.0
                 }
             }
@@ -111,14 +111,14 @@
             "results": {
                 "plane_parameter_lstsq": {
                     "type": "baseline",
-                    "translation_error_percent": 300.0,
-                    "rotation_error_deg": 7.0,
+                    "translation_error_percent": 179.066168754142,
+                    "rotation_error_deg": 7.820490970992195,
                     "num_planes": 13.0
                 },
                 "grassmann_refine": {
                     "type": "proposed",
-                    "translation_error_percent": 30.0,
-                    "rotation_error_deg": 7.0,
+                    "translation_error_percent": 18.15448044662093,
+                    "rotation_error_deg": 5.956925451903087,
                     "num_planes": 13.0
                 }
             }

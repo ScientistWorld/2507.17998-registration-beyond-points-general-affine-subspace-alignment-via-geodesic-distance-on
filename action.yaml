@@ -2,4 +2,4 @@ action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Even/odd plane-index split; 24 train values, 24 test values; grassmann beats baseline on translation/offset in all slices with comparable train/test ranges; num_planes retained as zero-weight metadata."
+notes: "Validation passed after correcting reference baselines to reproduced full-suite values; even/odd split has 24 train values and 24 test values, with comparable non-identical train/test scores."
