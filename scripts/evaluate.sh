@@ -28,7 +28,18 @@ PYTHON_BIN="${PYTHON:-python3}"
 mkdir -p scoring
 
 if [ "${1:-}" = "--suite" ]; then
-  "${PYTHON_BIN}" eval/evaluate_registration.py --suite --output scoring/scores.json
+  shift
+  if [ "$#" -gt 0 ] && [ -d "$1" ]; then
+    "${PYTHON_BIN}" eval/evaluate_registration.py \
+      --suite \
+      --checkpoints-dir "$1" \
+      --output scoring/scores.json
+  else
+    "${PYTHON_BIN}" eval/evaluate_registration.py \
+      --suite \
+      --output scoring/scores.json \
+      "$@"
+  fi
 else
   if [ "$#" -gt 0 ]; then
     predictions=("$@")

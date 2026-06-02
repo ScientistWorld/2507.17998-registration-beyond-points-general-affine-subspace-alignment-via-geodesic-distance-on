@@ -6,6 +6,24 @@ from pathlib import Path
 
 import numpy as np
 
+SUITE_SPECS = (
+    (
+        "synthetic_plane_registration_clean",
+        Path("data/plane_registration_outlier_0.00.json"),
+        "_outlier_0.00",
+    ),
+    (
+        "synthetic_plane_registration",
+        Path("data/plane_registration_outlier_0.05.json"),
+        "_outlier_0.05",
+    ),
+    (
+        "synthetic_plane_registration_outlier_0.10",
+        Path("data/plane_registration_outlier_0.10.json"),
+        "_outlier_0.10",
+    ),
+)
+
 
 def _unit(v: np.ndarray) -> np.ndarray:
     n = np.linalg.norm(v)
@@ -37,6 +55,38 @@ def plane_offset_rmse(r_est: np.ndarray, t_est: np.ndarray, source: list[dict], 
     return float(np.sqrt(np.mean(np.square(residuals))))
 
 
+def _load_prediction_method(path: Path) -> str:
+    if not path.exists():
+        raise FileNotFoundError(f"missing prediction file: {path}")
+    payload = json.loads(path.read_text())
+    method = payload.get("method")
+    if not isinstance(method, str) or not method:
+        raise ValueError(f"{path} must contain a non-empty string 'method'")
+    return method
+
+
+def _dedupe_predictions(predictions: list[Path]) -> list[Path]:
+    by_method: dict[str, Path] = {}
+    for path in predictions:
+        method = _load_prediction_method(path)
+        if method in by_method:
+            raise ValueError(
+                f"duplicate predictions for method '{method}': "
+                f"{by_method[method]} and {path}"
+            )
+        by_method[method] = path
+    return [by_method[name] for name in sorted(by_method)]
+
+
+def discover_suite_predictions(checkpoints_dir: Path, suffix: str) -> list[Path]:
+    predictions = sorted(checkpoints_dir.glob(f"*{suffix}.json"))
+    if not predictions:
+        raise FileNotFoundError(
+            f"no prediction JSON files matching '*{suffix}.json' in {checkpoints_dir}"
+        )
+    return _dedupe_predictions(predictions)
+
+
 def evaluate_one(data_path: Path, predictions: list[Path]) -> dict:
     if not data_path.exists():
         raise FileNotFoundError(f"missing evaluation data: {data_path}")
@@ -49,7 +99,7 @@ def evaluate_one(data_path: Path, predictions: list[Path]) -> dict:
     source = data["source"]
     target = data["target"]
     results = {}
-    for path in predictions:
+    for path in _dedupe_predictions(predictions):
         pred = json.loads(path.read_text())
         name = pred["method"]
         r = np.asarray(pred["rotation"], dtype=float)
@@ -70,43 +120,12 @@ def evaluate(data_path: Path, predictions: list[Path], output: Path) -> None:
     output.write_text(json.dumps(payload, indent=2))
 
 
-def evaluate_suite(output: Path) -> None:
-    specs = [
-        (
-            "synthetic_plane_registration_clean",
-            Path("data/plane_registration_outlier_0.00.json"),
-            [
-                Path("checkpoints/plane_parameter_lstsq_outlier_0.00.json"),
-                Path("checkpoints/grassmann_refine_outlier_0.00.json"),
-            ],
-        ),
-        (
-            "synthetic_plane_registration",
-            Path("data/plane_registration_outlier_0.05.json"),
-            [
-                Path("checkpoints/plane_parameter_lstsq_outlier_0.05.json"),
-                Path("checkpoints/grassmann_refine_outlier_0.05.json"),
-            ],
-        ),
-        (
-            "synthetic_plane_registration_outlier_0.10",
-            Path("data/plane_registration_outlier_0.10.json"),
-            [
-                Path("checkpoints/plane_parameter_lstsq_outlier_0.10.json"),
-                Path("checkpoints/grassmann_refine_outlier_0.10.json"),
-            ],
-        ),
-    ]
+def evaluate_suite(output: Path, checkpoints_dir: Path) -> None:
     experiments = {}
-    for name, data_path, preds in specs:
+    for name, data_path, suffix in SUITE_SPECS:
+        preds = discover_suite_predictions(checkpoints_dir, suffix)
         results = evaluate_one(data_path, preds)
         experiments[name] = {"results": results}
-    if not experiments:
-        evaluate(Path("data/plane_registration.json"), [
-            Path("checkpoints/plane_parameter_lstsq.json"),
-            Path("checkpoints/grassmann_refine.json"),
-        ], output)
-        return
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps({"experiments": experiments}, indent=2))
 
@@ -115,11 +134,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=Path, default=Path("data/plane_registration.json"))
     parser.add_argument("--output", type=Path, default=Path("scoring/scores.json"))
+    parser.add_argument("--checkpoints-dir", type=Path, default=Path("checkpoints"))
     parser.add_argument("--suite", action="store_true")
     parser.add_argument("predictions", nargs="*", type=Path)
     args = parser.parse_args()
     if args.suite:
-        evaluate_suite(args.output)
+        evaluate_suite(args.output, args.checkpoints_dir)
         return
     preds = args.predictions or [
         Path("checkpoints/plane_parameter_lstsq.json"),
