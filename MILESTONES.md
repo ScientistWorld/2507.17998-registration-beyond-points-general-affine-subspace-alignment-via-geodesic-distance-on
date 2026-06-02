@@ -22,4 +22,4 @@
 - Corrected Grassmann refinement beat the signed plane-parameter baseline on translation error for clean, 5%, and 10% outlier settings while keeping the same 13-plane constraint.
 
 ## Stop Justification
-- Completed at `core_claim_plus`.  Higher milestones would require implementing the paper's BnB solver and additional RGB-D odometry / PnL / localization task families, which are beyond this compact plane-to-plane reproduction.
+- Completed at milestone `core_claim_plus`.
