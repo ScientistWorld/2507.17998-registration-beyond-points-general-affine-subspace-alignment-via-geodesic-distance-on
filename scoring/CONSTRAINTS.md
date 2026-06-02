@@ -4,7 +4,7 @@
 
 Use the generated `data/plane_registration.json` problem with the default
 settings from `data/synthetic_planes.py`: 13 planes, 100 sampled points per
-plane, noise sigma 0.05, 20 percent outlier-corrupted target samples, and seed
+plane, noise sigma 0.05, 5 percent outlier-corrupted target samples, and seed
 7.  Increasing the number of planes, lowering the noise, changing the seed to a
 more favorable instance, or using the ground-truth transform during estimation
 is resource or data leakage rather than methodological improvement.

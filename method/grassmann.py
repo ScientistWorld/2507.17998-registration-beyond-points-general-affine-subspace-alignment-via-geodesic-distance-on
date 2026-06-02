@@ -97,18 +97,45 @@ def residual_vector(params: np.ndarray, source: list[dict], target: list[dict]) 
 
 
 def fit_translation_linear(source: list[dict], target: list[dict], r: np.ndarray) -> np.ndarray:
+    """Closed-form affine displacement initializer from Theorem 1.
+
+    For a transformed source plane, c' = R c + (R n n^T R^T) t.  Projecting
+    both sides onto the transformed normal gives one linear equation in t per
+    plane.  This uses the sign-invariant displacement vector, not arbitrary
+    signed plane parameters.
+    """
     rows = []
     vals = []
     for src, dst in zip(source, target):
         n_s = _unit(np.cross(np.asarray(src["basis"])[:, 0], np.asarray(src["basis"])[:, 1]))
-        n_t = _unit(np.cross(np.asarray(dst["basis"])[:, 0], np.asarray(dst["basis"])[:, 1]))
         c_s = np.asarray(src["displacement"], dtype=float)
         c_t = np.asarray(dst["displacement"], dtype=float)
         n_rs = r @ n_s
-        sign = 1.0 if n_rs @ n_t >= 0.0 else -1.0
-        rows.append(sign * n_t)
-        vals.append(float(sign * n_t @ c_t - n_rs @ (r @ c_s)))
+        rows.append(n_rs)
+        vals.append(float(n_rs @ (c_t - r @ c_s)))
     return np.linalg.lstsq(np.vstack(rows), np.asarray(vals), rcond=None)[0]
+
+
+def _solve_with_fixed_rotation(
+    r: np.ndarray, t0: np.ndarray, source: list[dict], target: list[dict]
+) -> tuple[np.ndarray, float, int, bool]:
+    rotvec = _matrix_to_rotvec(r)
+
+    def residual_t(t: np.ndarray) -> np.ndarray:
+        return residual_vector(np.r_[rotvec, t], source, target)
+
+    result = least_squares(
+        residual_t,
+        t0,
+        loss="soft_l1",
+        f_scale=0.05,
+        max_nfev=300,
+        xtol=1e-10,
+        ftol=1e-10,
+        gtol=1e-10,
+    )
+    params = np.r_[rotvec, result.x]
+    return params, float(np.sum(residual_vector(params, source, target) ** 2)), int(result.nfev), bool(result.success)
 
 
 def run(input_path: Path, output_path: Path) -> None:
@@ -131,14 +158,24 @@ def run(input_path: Path, output_path: Path) -> None:
         ftol=1e-10,
         gtol=1e-10,
     )
-    r = _rotvec_to_matrix(result.x[:3])
+    r_refined = _rotvec_to_matrix(result.x[:3])
+    t_linear = fit_translation_linear(source, target, r_refined)
+    fixed_params, fixed_cost, fixed_nfev, fixed_success = _solve_with_fixed_rotation(
+        r_refined, t_linear, source, target
+    )
+    full_cost = float(np.sum(residual_vector(result.x, source, target) ** 2))
+    params = fixed_params if fixed_cost <= full_cost else result.x
+    r = _rotvec_to_matrix(params[:3])
+    cost = min(full_cost, fixed_cost)
     payload = {
         "method": "grassmann_refine",
         "rotation": r.tolist(),
-        "translation": result.x[3:6].tolist(),
-        "cost": float(np.sum(residual_vector(result.x, source, target) ** 2)),
-        "nfev": int(result.nfev),
-        "success": bool(result.success),
+        "translation": params[3:6].tolist(),
+        "cost": cost,
+        "nfev": int(result.nfev + (fixed_nfev if fixed_cost <= full_cost else 0)),
+        "success": bool(result.success and (fixed_success if fixed_cost <= full_cost else True)),
+        "full_refine_cost": full_cost,
+        "fixed_rotation_cost": fixed_cost,
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(payload, indent=2))

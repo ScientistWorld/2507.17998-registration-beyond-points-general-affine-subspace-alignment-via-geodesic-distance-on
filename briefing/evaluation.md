@@ -25,4 +25,4 @@ Run `bash scripts/reproduce.sh` to generate the fixed synthetic dataset, run
 the baseline and proposed method, and write `scoring/scores.json`.  Run
 `bash scripts/evaluate.sh` to rescore existing outputs.  The default dataset
 uses 13 planes, 100 sampled points per plane, Gaussian noise with sigma 0.05,
-and 20 percent outlier-corrupted samples during target plane fitting.
+and 5 percent outlier-corrupted samples during target plane fitting.

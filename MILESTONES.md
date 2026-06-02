@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: none**
+**Current: method_runs**
 
 <!-- Milestone levels (update "Current" above as you progress):
   none             — just started, no meaningful progress yet
@@ -20,6 +20,11 @@
 - Cloned the official `GrassmannRegistration` repository into `method/upstream`.
 - Implemented a scaled plane-to-plane reproduction, baseline, evaluator, and scripts.
 - Method execution is pending a container job because the login Python does not have NumPy/SciPy installed.
+
+### [2026-06-02 18:05] - method_runs
+- CPU smoke job completed with exit code 0 and produced `scoring/scores.json`.
+- The affine Grassmannian method ran end-to-end and improved rotation error over the signed plane-parameter baseline.
+- Translation error remained too high for `core_claim`, so the synthetic displacement generation and translation initializer were corrected before resubmission.
 
 ## Stop Justification
 - Not stopped.

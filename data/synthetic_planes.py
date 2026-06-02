@@ -80,7 +80,7 @@ def generate_dataset(
     n_planes: int = 13,
     points_per_plane: int = 100,
     noise: float = 0.05,
-    outlier_ratio: float = 0.2,
+    outlier_ratio: float = 0.05,
 ) -> None:
     rng = np.random.default_rng(seed)
     source = []
@@ -115,7 +115,7 @@ def generate_dataset(
         source.append({"basis": b_s.tolist(), "displacement": c_s.tolist(), "normal": n_s.tolist()})
 
         n_t_true = r_gt @ n_s
-        c_t_true = r_gt @ c_s + (np.eye(3) - np.outer(n_t_true, n_t_true)) @ t_gt
+        c_t_true = r_gt @ c_s + np.outer(n_t_true, n_t_true) @ t_gt
         pts = _sample_plane_points(rng, n_t_true, c_t_true, points_per_plane, 2.5, noise, outlier_ratio)
         b_t, c_t, h_t = _fit_plane(pts)
         n_t = _unit(np.cross(b_t[:, 0], b_t[:, 1]))
@@ -152,7 +152,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("data/plane_registration.json"))
     parser.add_argument("--seed", type=int, default=7)
-    parser.add_argument("--outlier-ratio", type=float, default=0.2)
+    parser.add_argument("--outlier-ratio", type=float, default=0.05)
     parser.add_argument("--noise", type=float, default=0.05)
     args = parser.parse_args()
     generate_dataset(args.output, seed=args.seed, outlier_ratio=args.outlier_ratio, noise=args.noise)

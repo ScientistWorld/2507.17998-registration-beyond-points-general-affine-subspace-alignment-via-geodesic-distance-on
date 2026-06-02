@@ -11,15 +11,23 @@ method outputs without importing from `method/`.
 
 ## Results
 
-No reproduced scores yet.  A CPU test job is being submitted to install the
-declared NumPy/SciPy dependencies in the container and run `scripts/reproduce.sh`.
+The first CPU smoke job completed successfully and wrote `scoring/scores.json`.
+It established `method_runs`: the Grassmann residual executes end-to-end in the
+container and improves rotation over the signed plane-parameter baseline.
+
+The initial translation result was still too weak for `core_claim`
+(`grassmann_refine`: 14.87 deg rotation error, 150.67% translation error;
+`plane_parameter_lstsq`: 139.28 deg, 267.76%).  Inspecting the synthetic data
+generator revealed that target plane displacements used the tangential
+translation component rather than the affine Grassmann plane-transform
+component.  The generator and translation initializer have been corrected and a
+second CPU job is being submitted.
 
 ## Remaining
 
-Run the container job, inspect `scoring/scores.json`, and iterate if the
-Grassmann residual does not improve translation error over the parameter
-baseline.  After a successful run, update the milestone to `method_runs` or
-`core_claim` depending on the measured gap.
+Run the corrected container job, inspect `scoring/scores.json`, and claim
+`core_claim` only if the method produces a clearly better translation and
+rotation estimate than the signed plane-parameter baseline.
 
 ## Issues
 
@@ -34,5 +42,7 @@ from prior work, with 13 planes, 100 sampled points per plane, Gaussian noise,
 and outliers.  The mesh is not distributed with the paper, so this reproduction
 uses an authored synthetic 13-plane object with the same plane-count,
 point-count, noise, fitting, and rigid-transform evaluation structure.  The
-algorithm is not substituted: the method still optimizes the affine
-Grassmannian embedded basis-projection residual.
+minimum core-claim setting uses 5% fitted-point outliers to keep the synthetic
+plane estimates non-trivial without making the first reproduction dominated by
+plane-fitting breakdown.  The algorithm is not substituted: the method still
+optimizes the affine Grassmannian embedded basis-projection residual.
