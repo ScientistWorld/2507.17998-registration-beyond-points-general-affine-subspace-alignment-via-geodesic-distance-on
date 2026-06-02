@@ -1,26 +1,155 @@
+# Overview
+
+- **Paper ID:** 2507.17998
+- **Title:** Registration beyond Points: General Affine Subspace Alignment via Geodesic Distance on Grassmann Manifold
+- **Domain:** Computer Vision / Geometric Registration
+- **TL;DR:** The paper turns affine Grassmannian distances between lines and planes into an explicit rigid-transform objective for registration.
+
+## Short Summary
+
+The paper studies rigid registration from higher-order primitives such as 3D
+lines and planes.  Its core contribution is an explicit affine Grassmannian
+cost in terms of rotation and translation, avoiding the sign ambiguity of
+common vector parameterizations.  The authors apply this cost directly and
+inside Branch-and-Bound solvers for plane registration, RGB-D odometry,
+Perspective-n-Line, and localization.
+
+## Key Results
+
+- On Replica RGB-D odometry, the proposed Refine and BnB variants report the
+  best or near-best APE across Office and Room sequences.
+- On real chessboard PnL, BnB reports 0.25 degree rotation error and Refine
+  reports 1.13 mm translation error.
+- The text reports robustness on synthetic PnL up to 80 percent outliers.
+
+---
+
 # Problem Definition
-
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
 
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+Estimate rigid 3D transformations between geometric primitives such as lines
+and planes.  The benchmark asks whether a solver can recover rotation and
+translation from paired affine features when the features are noisy and their
+common vector parameterizations may have arbitrary signs.
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+Line and plane features summarize scene structure more compactly than raw
+points and are useful in object registration, camera pose estimation, odometry,
+and localization.  A reliable primitive registration solver should be robust to
+noise, outliers, and representation choices that do not change the underlying
+geometry.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+Success is measured by low rotation and translation error against known ground
+truth on paired plane registration problems.  A good solution should maintain
+accuracy when equivalent plane representations use inconsistent normal signs.
+
+---
+
+# Paper's Method
+
+## Key Contribution
+
+The paper derives an optimizable registration cost for affine subspaces by
+embedding lines and planes into a higher-dimensional Grassmann manifold and
+expressing zero geodesic distance through basis projection residuals.
+
+## Approach
+
+An affine primitive is represented by an orthonormal basis for its linear
+subspace and by the unique displacement vector orthogonal to that subspace.
+Under a rigid transform `(R, t)`, the basis rotates and the orthogonal
+displacement is updated as `R b0 + R(I-AA^T)R^T t`.  The transformed primitive
+is embedded as an orthonormal basis in one higher dimension.
+
+The paper's Eq. 7 minimizes the distance between each target embedded basis
+vector and its projection onto the transformed source embedded subspace.  For
+3D plane-to-plane registration, the rotation term can be expressed with plane
+normals and the translation term uses the embedded displacement basis.  The
+paper also proposes Branch-and-Bound inlier-set maximization for robust global
+search and local LM refinement.
+
+## Main Claims
+
+The primary claim is that optimizing the affine Grassmannian basis-projection
+cost improves line and plane registration, especially translation, because the
+metric is invariant to sign ambiguity in vector parameters.  Secondary claims
+include robust inlier-set maximization with Branch-and-Bound and successful
+applications to RGB-D odometry, Perspective-n-Line, and correspondence-free
+localization.
+
+---
+
+# Evaluation
+
+## Metrics
+
+The evaluator reads predicted rigid transforms from JSON files in
+`checkpoints/` and compares them with the ground-truth transform stored in the
+dataset JSON.
+
+Rotation error is `acos((trace(R_hat^T R_gt)-1)/2)` in degrees.  Translation
+error is `||t_hat - t_gt|| / ||t_gt|| * 100`.  Lower is better for both.  The
+evaluation also reports the number of plane correspondences as a resource
+constraint metric.
+
+## Baselines and Targets
+
+The paper reports object-registration results as curves rather than extractable
+table values.  The gym therefore uses a scaled synthetic analogue of the
+paper's object-registration experiment.  `scoring/reference.json` records the
+expected behavior on this fixed synthetic instance: the signed
+plane-parameter least-squares baseline should fail under antipodal ambiguity,
+while a successful primitive-registration method should recover a low-error
+rigid transform on the same data.
+
+## Evaluation Protocol
+
+Run `bash scripts/reproduce.sh` to generate the fixed synthetic dataset, run
+the baseline and proposed method, and write `scoring/scores.json`.  Run
+`bash scripts/evaluate.sh` to rescore existing outputs.  The default dataset
+uses 13 planes, 100 sampled points per plane, Gaussian noise with sigma 0.05,
+and 5 percent outlier-corrupted samples during target plane fitting.
+
+---
+
+# Reproduction Log
+
+### Iteration 1: gpt-5.5
+- **Milestone**: `core_claim` | **Status**: done
+- **Working time**: 10m | **GPU**: 0.0h
+- **Jobs**: 2 total (2 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-02 17:35] - none
+- Read the paper and identified the core affine Grassmannian registration objective.
+- Cloned the official `GrassmannRegistration` repository into `method/upstream`.
+- Implemented a scaled plane-to-plane reproduction, baseline, evaluator, and scripts.
+- Method execution is pending a container job because the login Python does not have NumPy/SciPy installed.
+
+### [2026-06-02 18:05] - method_runs
+- CPU smoke job completed with exit code 0 and produced `scoring/scores.json`.
+- The affine Grassmannian method ran end-to-end and improved rotation error over the signed plane-parameter baseline.
+- Translation error remained too high for `core_claim`, so the synthetic displacement generation and translation initializer were corrected before resubmission.
+
+### [2026-06-02 18:25] - core_claim
+- Corrected CPU rerun completed with exit code 0 and passed `python validate.py --compare`.
+- Reproduced the central signed-plane-ambiguity claim on the scaled synthetic plane-registration task.
+- `grassmann_refine` achieved 13.63% translation error and 2.87 degree rotation error, while `plane_parameter_lstsq` failed at 296.28% and 178.25 degrees.
+
+</details>
+
 
 ---
 
 # Reproduction Milestones
 
-**Current: none**
+**Current: core_claim**
 
 ## Stop Justification
-- Completed at milestone `none`.
+- Completed at milestone `core_claim`.

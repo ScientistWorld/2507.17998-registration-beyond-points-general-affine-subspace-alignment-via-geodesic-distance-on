@@ -32,4 +32,4 @@
 - `grassmann_refine` achieved 13.63% translation error and 2.87 degree rotation error, while `plane_parameter_lstsq` failed at 296.28% and 178.25 degrees.
 
 ## Stop Justification
-- Not stopped.
+- Completed at milestone `core_claim`.

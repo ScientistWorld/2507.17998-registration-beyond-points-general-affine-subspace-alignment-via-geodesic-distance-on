@@ -1,0 +1,141 @@
+{
+  "paper": {
+    "arxiv_id": "2507.17998",
+    "title": "Registration beyond Points: General Affine Subspace Alignment via Geodesic Distance on Grassmann Manifold",
+    "date": "",
+    "topics": [
+      "paper-type-metric-method",
+      "domain-cv",
+      "area-3d-perception",
+      "category-registration",
+      "method-grassmann-manifold",
+      "secondary-domain-cv",
+      "secondary-area-vision-models",
+      "secondary-category-optimization",
+      "secondary-method-branch-and-bound",
+      "selection-category-vision-restoration"
+    ]
+  },
+  "reproduction": {
+    "milestone": "core_claim",
+    "status": "done",
+    "error": null,
+    "scaffold": "codex",
+    "model": "gpt-5.5",
+    "profile": "gpt-5.5-medium",
+    "effort": "medium",
+    "gpu_hours_used": 0.0,
+    "current_iteration_gpu_budget": 30,
+    "current_iteration_gpu_hours_used": 0.0,
+    "total_gpu_hours_used": 0.0,
+    "current_iteration_cpu_hours_used": 0.02,
+    "total_cpu_hours_used": 0.02,
+    "gpu_budget": 30,
+    "duration_sec": 742.6,
+    "cost_usd": null,
+    "input_tokens": 3370580,
+    "output_tokens": 27375,
+    "cached_input_tokens": 3032704,
+    "cache_creation_tokens": null,
+    "reasoning_tokens": 0,
+    "total_input_tokens": 3370580,
+    "num_turns": 93,
+    "duration_api_ms": null,
+    "num_runs": 1,
+    "iteration_count": 0,
+    "workflow": "standard",
+    "workflow_step": 0,
+    "total_gpu_jobs": 2,
+    "time_breakdown": {
+      "working": 580.29612159729,
+      "building": 0.08198189735412598,
+      "installing": 1.094693660736084,
+      "waiting": 80.43783783912659
+    }
+  },
+  "agents": [
+    {
+      "scaffold": "codex",
+      "model": "gpt-5.5",
+      "profile": "gpt-5.5-medium",
+      "effort": "medium",
+      "role": "reproducer",
+      "is_iteration": false,
+      "iteration": 1,
+      "workflow": "standard",
+      "workflow_step": 0,
+      "started_at": 1780420024.2843752,
+      "finished_at": 1780420766.8868365,
+      "duration_sec": 742.6,
+      "blocked_sec": 0.0,
+      "status": "done",
+      "error": null,
+      "milestone": "core_claim",
+      "gpu_budget": 30,
+      "gpu_hours_used": 0.0,
+      "total_gpu_hours_used": 0.0,
+      "cpu_hours_used": 0.02,
+      "time_breakdown": {
+        "working": 580.29612159729,
+        "building": 0.08198189735412598,
+        "installing": 1.094693660736084,
+        "waiting": 80.43783783912659
+      },
+      "cost_usd": null,
+      "input_tokens": 3370580,
+      "output_tokens": 27375,
+      "cached_input_tokens": 3032704,
+      "cache_creation_tokens": null,
+      "reasoning_tokens": 0,
+      "total_input_tokens": 3370580,
+      "num_turns": 93,
+      "duration_api_ms": null,
+      "tool_uses": {
+        "shell": 82,
+        "file_edit": 11
+      },
+      "gpu_jobs": [
+        {
+          "run_id": "74b9dbe8-6a0",
+          "command": "bash /home/user/scripts/run.sh",
+          "num_gpus": 0,
+          "num_cpus": 1,
+          "resource": "gpu-cpu",
+          "hive_job_id": "efc1c6d4",
+          "status": "completed",
+          "returncode": 0,
+          "duration_sec": 46.1,
+          "submitted_at": 1780420645.4010031,
+          "started_at": 1780420647.2254055,
+          "completed_at": 1780420693.3007333
+        },
+        {
+          "run_id": "a708d881-676",
+          "command": "bash /home/user/scripts/run.sh",
+          "num_gpus": 0,
+          "num_cpus": 1,
+          "resource": "gpu-cpu",
+          "hive_job_id": "1cf80b7a",
+          "status": "completed",
+          "returncode": 0,
+          "duration_sec": 27.5,
+          "submitted_at": 1780420423.7051916,
+          "started_at": 1780420425.5611362,
+          "completed_at": 1780420453.0750177
+        }
+      ],
+      "progress_log": "### [2026-06-02 17:35] - none\n- Read the paper and identified the core affine Grassmannian registration objective.\n- Cloned the official `GrassmannRegistration` repository into `method/upstream`.\n- Implemented a scaled plane-to-plane reproduction, baseline, evaluator, and scripts.\n- Method execution is pending a container job because the login Python does not have NumPy/SciPy installed.\n\n### [2026-06-02 18:05] - method_runs\n- CPU smoke job completed with exit code 0 and produced `scoring/scores.json`.\n- The affine Grassmannian method ran end-to-end and improved rotation error over the signed plane-parameter baseline.\n- Translation error remained too high for `core_claim`, so the synthetic displacement generation and translation initializer were corrected before resubmission.\n\n### [2026-06-02 18:25] - core_claim\n- Corrected CPU rerun completed with exit code 0 and passed `python validate.py --compare`.\n- Reproduced the central signed-plane-ambiguity claim on the scaled synthetic plane-registration task.\n- `grassmann_refine` achieved 13.63% translation error and 2.87 degree rotation error, while `plane_parameter_lstsq` failed at 296.28% and 178.25 degrees."
+    }
+  ],
+  "components": {
+    "has_container": true,
+    "has_method_code": true,
+    "has_evaluation": true,
+    "has_download_script": true,
+    "has_reproduce_script": true,
+    "has_method_script": true,
+    "has_baseline": true,
+    "has_reference": true,
+    "has_data": true
+  }
+}
