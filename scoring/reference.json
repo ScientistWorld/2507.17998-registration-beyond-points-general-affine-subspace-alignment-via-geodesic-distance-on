@@ -27,8 +27,8 @@
         },
         "grassmann_refine": {
           "type": "proposed",
-          "translation_error_percent": 1.0,
-          "rotation_error_deg": 0.5,
+          "translation_error_percent": 0.4,
+          "rotation_error_deg": 0.15,
           "num_planes": 13.0
         }
       }
