@@ -15,9 +15,11 @@ constraint metric.
 
 The paper reports object-registration results as curves rather than extractable
 table values.  The gym therefore uses a scaled synthetic analogue of the
-paper's object-registration experiment and defines reference targets in
-`scoring/reference.json`: a signed plane-parameter least-squares baseline and a
-target for a successful primitive-registration method on the same data.
+paper's object-registration experiment.  `scoring/reference.json` records the
+expected behavior on this fixed synthetic instance: the signed
+plane-parameter least-squares baseline should fail under antipodal ambiguity,
+while a successful primitive-registration method should recover a low-error
+rigid transform on the same data.
 
 ## Evaluation Protocol
 
