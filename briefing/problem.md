@@ -1,17 +1,22 @@
 # Problem Definition
 
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
-
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+Estimate rigid 3D transformations between geometric primitives such as lines
+and planes.  The benchmark asks whether a solver can recover rotation and
+translation from paired affine features when the features are noisy and their
+common vector parameterizations may have arbitrary signs.
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+Line and plane features summarize scene structure more compactly than raw
+points and are useful in object registration, camera pose estimation, odometry,
+and localization.  A reliable primitive registration solver should be robust to
+noise, outliers, and representation choices that do not change the underlying
+geometry.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+Success is measured by low rotation and translation error against known ground
+truth on paired plane registration problems.  A good solution should maintain
+accuracy when equivalent plane representations use inconsistent normal signs.

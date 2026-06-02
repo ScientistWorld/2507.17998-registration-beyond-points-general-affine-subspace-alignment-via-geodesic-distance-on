@@ -1,15 +1,28 @@
 # Evaluation
 
-How success is measured. Describe only the metrics, targets, and evaluation procedure — do NOT describe the paper's method or how they achieved these results. Think of this as a general evaluation protocal for other scientists trying to solve the same problem, where they should not see this paper's solution.
-
 ## Metrics
 
-<!-- What metrics are used? How are they computed? What does higher/lower mean? -->
+The evaluator reads predicted rigid transforms from JSON files in
+`checkpoints/` and compares them with the ground-truth transform stored in the
+dataset JSON.
+
+Rotation error is `acos((trace(R_hat^T R_gt)-1)/2)` in degrees.  Translation
+error is `||t_hat - t_gt|| / ||t_gt|| * 100`.  Lower is better for both.  The
+evaluation also reports the number of plane correspondences as a resource
+constraint metric.
 
 ## Baselines and Targets
 
-<!-- What performance levels exist as reference points? Include the paper's reported numbers as targets, and any standard baselines. A scientist agent should know what "good" looks like. -->
+The paper reports object-registration results as curves rather than extractable
+table values.  The gym therefore uses a scaled synthetic analogue of the
+paper's object-registration experiment and defines reference targets in
+`scoring/reference.json`: a signed plane-parameter least-squares baseline and a
+target for a successful primitive-registration method on the same data.
 
 ## Evaluation Protocol
 
-<!-- How should evaluation be run? What data split, what conditions? Any important details about how to compare fairly (e.g., fixed seeds, specific test sets, averaging over runs). -->
+Run `bash scripts/reproduce.sh` to generate the fixed synthetic dataset, run
+the baseline and proposed method, and write `scoring/scores.json`.  Run
+`bash scripts/evaluate.sh` to rescore existing outputs.  The default dataset
+uses 13 planes, 100 sampled points per plane, Gaussian noise with sigma 0.05,
+and 20 percent outlier-corrupted samples during target plane fitting.

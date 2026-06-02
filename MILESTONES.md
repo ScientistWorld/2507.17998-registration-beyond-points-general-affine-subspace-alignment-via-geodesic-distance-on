@@ -15,7 +15,11 @@
 
 ## Progress Log
 
-<!-- Write your progress here -->
+### [2026-06-02 17:35] - none
+- Read the paper and identified the core affine Grassmannian registration objective.
+- Cloned the official `GrassmannRegistration` repository into `method/upstream`.
+- Implemented a scaled plane-to-plane reproduction, baseline, evaluator, and scripts.
+- Method execution is pending a container job because the login Python does not have NumPy/SciPy installed.
 
 ## Stop Justification
-- Completed at milestone `none`.
+- Not stopped.

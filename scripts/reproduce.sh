@@ -18,7 +18,11 @@ set -e
 
 cd /home/user
 
-# TODO: implement full reproduction pipeline
-# e.g.:
-#   bash scripts/baseline.sh
-#   bash scripts/method.sh
+python data/synthetic_planes.py --output data/plane_registration.json
+python baseline/plane_parameter.py \
+  --input data/plane_registration.json \
+  --output checkpoints/plane_parameter_lstsq.json
+python method/grassmann.py \
+  --input data/plane_registration.json \
+  --output checkpoints/grassmann_refine.json
+bash scripts/evaluate.sh

@@ -17,4 +17,8 @@ set -e
 
 cd /home/user
 
-# TODO: run baseline
+python data/synthetic_planes.py --output data/plane_registration.json
+python baseline/plane_parameter.py \
+  --input data/plane_registration.json \
+  --output checkpoints/plane_parameter_lstsq.json
+bash scripts/evaluate.sh

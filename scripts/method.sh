@@ -10,5 +10,8 @@ set -e
 
 cd /home/user
 
-# TODO: run the paper's method
-# TODO: call scripts/evaluate.sh to score
+python data/synthetic_planes.py --output data/plane_registration.json
+python method/grassmann.py \
+  --input data/plane_registration.json \
+  --output checkpoints/grassmann_refine.json
+bash scripts/evaluate.sh

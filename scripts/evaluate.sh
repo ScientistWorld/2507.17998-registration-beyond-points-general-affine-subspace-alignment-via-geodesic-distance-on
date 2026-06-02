@@ -26,5 +26,8 @@ cd /home/user
 
 mkdir -p scoring
 
-# TODO: implement evaluation using code in eval/
-# Must write scoring/scores.json at the end
+python eval/evaluate_registration.py \
+  --data data/plane_registration.json \
+  --output scoring/scores.json \
+  checkpoints/plane_parameter_lstsq.json \
+  checkpoints/grassmann_refine.json

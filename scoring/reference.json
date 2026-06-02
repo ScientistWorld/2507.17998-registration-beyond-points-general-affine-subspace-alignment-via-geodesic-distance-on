@@ -1,0 +1,37 @@
+{
+  "experiments": {
+    "synthetic_plane_registration": {
+      "description": "Scaled Sec. 5.1 plane-to-plane object registration with noisy fitted planes and antipodal parameter ambiguity.",
+      "weight": 1.0,
+      "primary_metric": "translation_error_percent",
+      "metrics": {
+        "translation_error_percent": {
+          "higher_is_better": false,
+          "coefficient": -1.0
+        },
+        "rotation_error_deg": {
+          "higher_is_better": false,
+          "coefficient": -0.5
+        },
+        "num_planes": {
+          "higher_is_better": false,
+          "coefficient": -0.05
+        }
+      },
+      "results": {
+        "plane_parameter_lstsq": {
+          "type": "baseline",
+          "translation_error_percent": 100.0,
+          "rotation_error_deg": 90.0,
+          "num_planes": 13.0
+        },
+        "grassmann_refine": {
+          "type": "proposed",
+          "translation_error_percent": 10.0,
+          "rotation_error_deg": 10.0,
+          "num_planes": 13.0
+        }
+      }
+    }
+  }
+}
