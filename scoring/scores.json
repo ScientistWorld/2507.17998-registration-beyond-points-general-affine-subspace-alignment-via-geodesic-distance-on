@@ -3,13 +3,13 @@
     "synthetic_plane_registration": {
       "results": {
         "plane_parameter_lstsq": {
-          "rotation_error_deg": 139.28314688652517,
-          "translation_error_percent": 267.75978518586226,
+          "rotation_error_deg": 178.25486438811427,
+          "translation_error_percent": 296.2840596623836,
           "num_planes": 13.0
         },
         "grassmann_refine": {
-          "rotation_error_deg": 14.865609672846535,
-          "translation_error_percent": 150.67299303695495,
+          "rotation_error_deg": 2.874144259191693,
+          "translation_error_percent": 13.626892705065586,
           "num_planes": 13.0
         }
       }
