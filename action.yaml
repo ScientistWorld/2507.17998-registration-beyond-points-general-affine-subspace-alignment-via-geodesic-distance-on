@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
-test: true
+test: false
 milestone: core_claim_plus
-notes: "CPU verification job: rerun canonical reproduction, supplemental train/test evaluation, and validate.py --compare after fixing the score metric contract."
+notes: "Final verification passed; workspace is ready as a core_claim_plus gym with documented synthetic-data limitation."
