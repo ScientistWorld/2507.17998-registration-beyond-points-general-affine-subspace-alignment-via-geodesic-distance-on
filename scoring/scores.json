@@ -1,5 +1,19 @@
 {
   "experiments": {
+    "synthetic_plane_registration_clean": {
+      "results": {
+        "plane_parameter_lstsq": {
+          "rotation_error_deg": 179.80026264202093,
+          "translation_error_percent": 329.69165303769347,
+          "num_planes": 13.0
+        },
+        "grassmann_refine": {
+          "rotation_error_deg": 0.14632331800267023,
+          "translation_error_percent": 0.3689706996172737,
+          "num_planes": 13.0
+        }
+      }
+    },
     "synthetic_plane_registration": {
       "results": {
         "plane_parameter_lstsq": {
@@ -10,6 +24,20 @@
         "grassmann_refine": {
           "rotation_error_deg": 2.874144259191693,
           "translation_error_percent": 13.626892705065586,
+          "num_planes": 13.0
+        }
+      }
+    },
+    "synthetic_plane_registration_outlier_0.10": {
+      "results": {
+        "plane_parameter_lstsq": {
+          "rotation_error_deg": 174.8480638806024,
+          "translation_error_percent": 282.0205723641831,
+          "num_planes": 13.0
+        },
+        "grassmann_refine": {
+          "rotation_error_deg": 8.559970028420373,
+          "translation_error_percent": 22.647946906446567,
           "num_planes": 13.0
         }
       }

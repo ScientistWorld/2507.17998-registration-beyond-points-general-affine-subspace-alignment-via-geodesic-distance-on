@@ -18,11 +18,17 @@ set -e
 
 cd /home/user
 
-python data/synthetic_planes.py --output data/plane_registration.json
-python baseline/plane_parameter.py \
-  --input data/plane_registration.json \
-  --output checkpoints/plane_parameter_lstsq.json
-python method/grassmann.py \
-  --input data/plane_registration.json \
-  --output checkpoints/grassmann_refine.json
-bash scripts/evaluate.sh
+for ratio in 0.00 0.05 0.10; do
+  data_path="data/plane_registration_outlier_${ratio}.json"
+  baseline_out="checkpoints/plane_parameter_lstsq_outlier_${ratio}.json"
+  method_out="checkpoints/grassmann_refine_outlier_${ratio}.json"
+  python data/synthetic_planes.py --outlier-ratio "${ratio}" --output "${data_path}"
+  python baseline/plane_parameter.py --input "${data_path}" --output "${baseline_out}"
+  python method/grassmann.py --input "${data_path}" --output "${method_out}"
+done
+
+cp data/plane_registration_outlier_0.05.json data/plane_registration.json
+cp checkpoints/plane_parameter_lstsq_outlier_0.05.json checkpoints/plane_parameter_lstsq.json
+cp checkpoints/grassmann_refine_outlier_0.05.json checkpoints/grassmann_refine.json
+
+bash scripts/evaluate.sh --suite

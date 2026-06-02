@@ -16,7 +16,7 @@ def translation_error_percent(t_est: np.ndarray, t_gt: np.ndarray) -> float:
     return float(np.linalg.norm(t_est - t_gt) / max(np.linalg.norm(t_gt), 1e-12) * 100.0)
 
 
-def evaluate(data_path: Path, predictions: list[Path], output: Path) -> None:
+def evaluate_one(data_path: Path, predictions: list[Path]) -> dict:
     data = json.loads(data_path.read_text())
     r_gt = np.asarray(data["ground_truth"]["rotation"], dtype=float)
     t_gt = np.asarray(data["ground_truth"]["translation"], dtype=float)
@@ -33,17 +33,69 @@ def evaluate(data_path: Path, predictions: list[Path], output: Path) -> None:
             "translation_error_percent": translation_error_percent(t, t_gt),
             "num_planes": float(len(data["source"])),
         }
+    return results
+
+
+def evaluate(data_path: Path, predictions: list[Path], output: Path) -> None:
+    results = evaluate_one(data_path, predictions)
     payload = {"experiments": {"synthetic_plane_registration": {"results": results}}}
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2))
+
+
+def evaluate_suite(output: Path) -> None:
+    specs = [
+        (
+            "synthetic_plane_registration_clean",
+            Path("data/plane_registration_outlier_0.00.json"),
+            [
+                Path("checkpoints/plane_parameter_lstsq_outlier_0.00.json"),
+                Path("checkpoints/grassmann_refine_outlier_0.00.json"),
+            ],
+        ),
+        (
+            "synthetic_plane_registration",
+            Path("data/plane_registration_outlier_0.05.json"),
+            [
+                Path("checkpoints/plane_parameter_lstsq_outlier_0.05.json"),
+                Path("checkpoints/grassmann_refine_outlier_0.05.json"),
+            ],
+        ),
+        (
+            "synthetic_plane_registration_outlier_0.10",
+            Path("data/plane_registration_outlier_0.10.json"),
+            [
+                Path("checkpoints/plane_parameter_lstsq_outlier_0.10.json"),
+                Path("checkpoints/grassmann_refine_outlier_0.10.json"),
+            ],
+        ),
+    ]
+    experiments = {}
+    for name, data_path, preds in specs:
+        if data_path.exists():
+            results = evaluate_one(data_path, preds)
+            if results:
+                experiments[name] = {"results": results}
+    if not experiments:
+        evaluate(Path("data/plane_registration.json"), [
+            Path("checkpoints/plane_parameter_lstsq.json"),
+            Path("checkpoints/grassmann_refine.json"),
+        ], output)
+        return
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps({"experiments": experiments}, indent=2))
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=Path, default=Path("data/plane_registration.json"))
     parser.add_argument("--output", type=Path, default=Path("scoring/scores.json"))
+    parser.add_argument("--suite", action="store_true")
     parser.add_argument("predictions", nargs="*", type=Path)
     args = parser.parse_args()
+    if args.suite:
+        evaluate_suite(args.output)
+        return
     preds = args.predictions or [
         Path("checkpoints/plane_parameter_lstsq.json"),
         Path("checkpoints/grassmann_refine.json"),

@@ -11,12 +11,13 @@ method outputs without importing from `method/`.
 
 ## Results
 
-The corrected CPU rerun completed successfully and passed
-`python validate.py --compare`.  The reproduction reaches `core_claim` on the
-scaled synthetic plane-registration task:
+The expanded CPU rerun completed successfully and passed
+`python validate.py --compare`.  The reproduction reaches `core_claim_plus` on
+the scaled synthetic plane-registration task:
 
-- `plane_parameter_lstsq`: 178.25 degree rotation error, 296.28% translation error
-- `grassmann_refine`: 2.87 degree rotation error, 13.63% translation error
+- 0% outliers: baseline 329.69% translation / 179.80 deg rotation; Grassmann 0.37% / 0.15 deg
+- 5% outliers: baseline 296.28% translation / 178.25 deg rotation; Grassmann 13.63% / 2.87 deg
+- 10% outliers: baseline 282.02% translation / 174.85 deg rotation; Grassmann 22.65% / 8.56 deg
 
 This supports the paper's central claim for plane registration: optimizing the
 affine Grassmannian plane representation avoids the signed-parameter ambiguity
@@ -24,9 +25,10 @@ that breaks direct plane-parameter least squares.
 
 ## Remaining
 
-Higher milestones would require expanding beyond the minimum synthetic setting,
-for example sweeping outlier ratios or reproducing the paper's line-to-plane
-and line-to-line experiments.
+Higher milestones would require reproducing additional paper task families,
+especially line-to-line RGB-D odometry or line-to-plane PnL, and implementing
+the paper's BnB inlier-set maximization rather than only the LM refinement
+path for plane-to-plane registration.
 
 ## Issues
 
@@ -44,5 +46,6 @@ uses an authored synthetic 13-plane object with the same plane-count,
 point-count, noise, fitting, and rigid-transform evaluation structure.  The
 minimum core-claim setting uses 5% fitted-point outliers to keep the synthetic
 plane estimates non-trivial without making the first reproduction dominated by
-plane-fitting breakdown.  The algorithm is not substituted: the method still
-optimizes the affine Grassmannian embedded basis-projection residual.
+plane-fitting breakdown.  The expanded suite also includes 0% and 10% outlier
+settings.  The algorithm is not substituted: the method still optimizes the
+affine Grassmannian embedded basis-projection residual.

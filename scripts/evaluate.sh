@@ -26,8 +26,12 @@ cd /home/user
 
 mkdir -p scoring
 
-python eval/evaluate_registration.py \
-  --data data/plane_registration.json \
-  --output scoring/scores.json \
-  checkpoints/plane_parameter_lstsq.json \
-  checkpoints/grassmann_refine.json
+if [ "${1:-}" = "--suite" ]; then
+  python eval/evaluate_registration.py --suite --output scoring/scores.json
+else
+  python eval/evaluate_registration.py \
+    --data data/plane_registration.json \
+    --output scoring/scores.json \
+    checkpoints/plane_parameter_lstsq.json \
+    checkpoints/grassmann_refine.json
+fi
