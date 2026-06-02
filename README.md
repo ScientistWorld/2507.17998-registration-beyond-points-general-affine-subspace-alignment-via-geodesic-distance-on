@@ -144,12 +144,32 @@ and 5 percent outlier-corrupted samples during target plane fitting.
 
 </details>
 
+### Iteration 2: gpt-5.5
+- **Milestone**: `core_claim_plus` | **Status**: done
+- **Working time**: 5m | **GPU**: 0.0h
+- **Jobs**: 2 total (2 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-02 18:00] - core_claim_plus
+- Ran the actual affine Grassmannian plane-to-plane residual on three synthetic object-registration settings: 0%, 5%, and 10% fitted-point outliers.
+- The proposed method substantially reduced translation and rotation error relative to the signed plane-parameter baseline on all settings.
+- Validation passed with `python validate.py --compare`.
+
+### [2026-06-02 18:20] - core_claim_plus
+- Audited the implementation and confirmed it implements the paper's affine Grassmannian embedded basis-projection residual for plane-to-plane registration, not a surrogate.
+- Fixed script interpreter selection so standalone evaluation and reproduction use the same dependency-installed Python interpreter.
+- Reran `bash scripts/reproduce.sh && python3 validate.py --compare` successfully.
+
+</details>
+
 
 ---
 
 # Reproduction Milestones
 
-**Current: method_runs**
+**Current: core_claim_plus**
 
 ## Stop Justification
-- Completed at milestone `method_runs`.
+- Completed at milestone `core_claim_plus`.

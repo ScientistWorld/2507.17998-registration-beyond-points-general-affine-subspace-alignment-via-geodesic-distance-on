@@ -15,4 +15,4 @@
 - Reran `bash scripts/reproduce.sh && python3 validate.py --compare` successfully.
 
 ## Stop Justification
-- Completed a trustworthy `core_claim_plus` reproduction on the scaled synthetic plane-registration suite. Higher milestones would require implementing additional task families such as line-to-plane PnL or the full BnB solver.
+- Completed at milestone `core_claim_plus`.
