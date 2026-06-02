@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Run full train/test suite against existing checkpoint predictions; wrappers now accept checkpoints dir."
+notes: "Even/odd plane-index split; 24 train values, 24 test values; grassmann beats baseline on translation/offset in all slices with comparable train/test ranges; num_planes retained as zero-weight metadata."

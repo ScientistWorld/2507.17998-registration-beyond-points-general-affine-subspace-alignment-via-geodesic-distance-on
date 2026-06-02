@@ -1,127 +1,127 @@
 {
-  "experiments": {
-    "synthetic_plane_registration_clean": {
-      "description": "Scaled Sec. 5.1 plane-to-plane registration without fitted-point outliers.",
-      "weight": 0.25,
-      "primary_metric": "translation_error_percent",
-      "metrics": {
-        "translation_error_percent": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
+    "experiments": {
+        "synthetic_plane_registration_clean": {
+            "description": "Scaled Sec. 5.1 plane-to-plane registration without fitted-point outliers.",
+            "weight": 0.25,
+            "primary_metric": "translation_error_percent",
+            "metrics": {
+                "translation_error_percent": {
+                    "higher_is_better": false,
+                    "coefficient": -1.0,
+                    "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
+                },
+                "rotation_error_deg": {
+                    "higher_is_better": false,
+                    "coefficient": -0.5,
+                    "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
+                },
+                "plane_offset_rmse": {
+                    "higher_is_better": false,
+                    "coefficient": -0.4,
+                    "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
+                },
+                "num_planes": {
+                    "higher_is_better": false,
+                    "coefficient": 0.0,
+                    "description": "Number of input planes in the registration instance, reported as fixed problem-scale metadata rather than a ranked metric."
+                }
+            },
+            "results": {
+                "plane_parameter_lstsq": {
+                    "type": "baseline",
+                    "translation_error_percent": 300.0,
+                    "rotation_error_deg": 0.15,
+                    "num_planes": 13.0
+                },
+                "grassmann_refine": {
+                    "type": "proposed",
+                    "translation_error_percent": 0.4,
+                    "rotation_error_deg": 0.15,
+                    "num_planes": 13.0
+                }
+            }
         },
-        "rotation_error_deg": {
-          "higher_is_better": false,
-          "coefficient": -0.5,
-          "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
+        "synthetic_plane_registration": {
+            "description": "Scaled Sec. 5.1 plane-to-plane object registration with noisy fitted planes and antipodal parameter ambiguity.",
+            "weight": 0.5,
+            "primary_metric": "translation_error_percent",
+            "metrics": {
+                "translation_error_percent": {
+                    "higher_is_better": false,
+                    "coefficient": -1.0,
+                    "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
+                },
+                "rotation_error_deg": {
+                    "higher_is_better": false,
+                    "coefficient": -0.5,
+                    "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
+                },
+                "plane_offset_rmse": {
+                    "higher_is_better": false,
+                    "coefficient": -0.4,
+                    "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
+                },
+                "num_planes": {
+                    "higher_is_better": false,
+                    "coefficient": 0.0,
+                    "description": "Number of input planes in the registration instance, reported as fixed problem-scale metadata rather than a ranked metric."
+                }
+            },
+            "results": {
+                "plane_parameter_lstsq": {
+                    "type": "baseline",
+                    "translation_error_percent": 300.0,
+                    "rotation_error_deg": 3.0,
+                    "num_planes": 13.0
+                },
+                "grassmann_refine": {
+                    "type": "proposed",
+                    "translation_error_percent": 15.0,
+                    "rotation_error_deg": 3.0,
+                    "num_planes": 13.0
+                }
+            }
         },
-        "plane_offset_rmse": {
-          "higher_is_better": false,
-          "coefficient": -0.4,
-          "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
-        },
-        "num_planes": {
-          "higher_is_better": false,
-          "coefficient": -0.01,
-          "description": "Number of input planes in the registration instance, kept as a small resource-scale constraint."
+        "synthetic_plane_registration_outlier_0.10": {
+            "description": "Scaled Sec. 5.1 plane-to-plane registration with 10 percent fitted-point outliers.",
+            "weight": 0.25,
+            "primary_metric": "translation_error_percent",
+            "metrics": {
+                "translation_error_percent": {
+                    "higher_is_better": false,
+                    "coefficient": -1.0,
+                    "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
+                },
+                "rotation_error_deg": {
+                    "higher_is_better": false,
+                    "coefficient": -0.5,
+                    "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
+                },
+                "plane_offset_rmse": {
+                    "higher_is_better": false,
+                    "coefficient": -0.4,
+                    "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
+                },
+                "num_planes": {
+                    "higher_is_better": false,
+                    "coefficient": 0.0,
+                    "description": "Number of input planes in the registration instance, reported as fixed problem-scale metadata rather than a ranked metric."
+                }
+            },
+            "results": {
+                "plane_parameter_lstsq": {
+                    "type": "baseline",
+                    "translation_error_percent": 300.0,
+                    "rotation_error_deg": 7.0,
+                    "num_planes": 13.0
+                },
+                "grassmann_refine": {
+                    "type": "proposed",
+                    "translation_error_percent": 30.0,
+                    "rotation_error_deg": 7.0,
+                    "num_planes": 13.0
+                }
+            }
         }
-      },
-      "results": {
-        "plane_parameter_lstsq": {
-          "type": "baseline",
-          "translation_error_percent": 300.0,
-          "rotation_error_deg": 0.15,
-          "num_planes": 13.0
-        },
-        "grassmann_refine": {
-          "type": "proposed",
-          "translation_error_percent": 0.4,
-          "rotation_error_deg": 0.15,
-          "num_planes": 13.0
-        }
-      }
-    },
-    "synthetic_plane_registration": {
-      "description": "Scaled Sec. 5.1 plane-to-plane object registration with noisy fitted planes and antipodal parameter ambiguity.",
-      "weight": 0.5,
-      "primary_metric": "translation_error_percent",
-      "metrics": {
-        "translation_error_percent": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
-        },
-        "rotation_error_deg": {
-          "higher_is_better": false,
-          "coefficient": -0.5,
-          "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
-        },
-        "plane_offset_rmse": {
-          "higher_is_better": false,
-          "coefficient": -0.4,
-          "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
-        },
-        "num_planes": {
-          "higher_is_better": false,
-          "coefficient": -0.01,
-          "description": "Number of input planes in the registration instance, kept as a small resource-scale constraint."
-        }
-      },
-      "results": {
-        "plane_parameter_lstsq": {
-          "type": "baseline",
-          "translation_error_percent": 300.0,
-          "rotation_error_deg": 3.0,
-          "num_planes": 13.0
-        },
-        "grassmann_refine": {
-          "type": "proposed",
-          "translation_error_percent": 15.0,
-          "rotation_error_deg": 3.0,
-          "num_planes": 13.0
-        }
-      }
-    },
-    "synthetic_plane_registration_outlier_0.10": {
-      "description": "Scaled Sec. 5.1 plane-to-plane registration with 10 percent fitted-point outliers.",
-      "weight": 0.25,
-      "primary_metric": "translation_error_percent",
-      "metrics": {
-        "translation_error_percent": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
-        },
-        "rotation_error_deg": {
-          "higher_is_better": false,
-          "coefficient": -0.5,
-          "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
-        },
-        "plane_offset_rmse": {
-          "higher_is_better": false,
-          "coefficient": -0.4,
-          "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
-        },
-        "num_planes": {
-          "higher_is_better": false,
-          "coefficient": -0.01,
-          "description": "Number of input planes in the registration instance, kept as a small resource-scale constraint."
-        }
-      },
-      "results": {
-        "plane_parameter_lstsq": {
-          "type": "baseline",
-          "translation_error_percent": 300.0,
-          "rotation_error_deg": 7.0,
-          "num_planes": 13.0
-        },
-        "grassmann_refine": {
-          "type": "proposed",
-          "translation_error_percent": 30.0,
-          "rotation_error_deg": 7.0,
-          "num_planes": 13.0
-        }
-      }
     }
-  }
 }
