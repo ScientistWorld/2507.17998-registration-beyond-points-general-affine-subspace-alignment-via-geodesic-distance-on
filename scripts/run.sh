@@ -12,7 +12,6 @@
 set -e
 
 cd /home/user
-PYTHON_BIN="${PYTHON:-python3}"
 
-bash scripts/reproduce.sh
-"${PYTHON_BIN}" validate.py --compare
+bash scripts/evaluate_train.sh --suite /home/user/checkpoints
+bash scripts/evaluate_test.sh --suite /home/user/checkpoints

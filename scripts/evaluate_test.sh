@@ -12,7 +12,26 @@ PYTHON_BIN="${PYTHON:-python3}"
 mkdir -p scoring
 
 if [ "${1:-}" = "--suite" ]; then
-  "${PYTHON_BIN}" eval/test/evaluate.py --suite --output scoring/scores_test.json
+  shift
+  if [ "$#" -gt 0 ] && [ -d "$1" ]; then
+    "${PYTHON_BIN}" eval/test/evaluate.py \
+      --suite \
+      --checkpoints-dir "$1" \
+      --output scoring/scores_test.json
+  else
+    "${PYTHON_BIN}" eval/test/evaluate.py \
+      --suite \
+      --output scoring/scores_test.json \
+      "$@"
+  fi
 else
-  "${PYTHON_BIN}" eval/test/evaluate.py --output scoring/scores_test.json "$@"
+  if [ "$#" -gt 0 ] && [ -d "$1" ]; then
+    "${PYTHON_BIN}" eval/test/evaluate.py \
+      --checkpoints-dir "$1" \
+      --output scoring/scores_test.json
+  else
+    "${PYTHON_BIN}" eval/test/evaluate.py \
+      --output scoring/scores_test.json \
+      "$@"
+  fi
 fi
