@@ -22,4 +22,4 @@ PYTHON_BIN="${PYTHON:-python3}"
 "${PYTHON_BIN}" baseline/plane_parameter.py \
   --input data/plane_registration.json \
   --output checkpoints/plane_parameter_lstsq.json
-bash scripts/evaluate.sh
+bash scripts/evaluate.sh checkpoints/plane_parameter_lstsq.json

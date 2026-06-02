@@ -1,9 +1,11 @@
 """Affine Grassmannian plane-to-plane registration.
 
 This implements the paper's optimizable basis-projection residual for
-Graff(2, 3) plane registration.  The transformed source plane is embedded in
-Gr(3, 4) using Eq. (5), and each residual projects the target embedded basis
-onto that transformed source basis as in Eq. (7) / Corollary 2.3.
+Graff(2, 3) plane registration.  Eq. (7) separates the 3D linear-subspace
+alignment term from the 4D embedded affine-displacement term: target plane
+basis vectors are projected onto the rotated source plane basis in R^3, while
+the target displacement basis is projected onto the embedded transformed
+source plane in Gr(3, 4).
 """
 
 from __future__ import annotations
@@ -84,15 +86,17 @@ def residual_vector(params: np.ndarray, source: list[dict], target: list[dict]) 
         c_s = np.asarray(src["displacement"], dtype=float)
         b_t = np.asarray(dst["basis"], dtype=float)
         c_t = np.asarray(dst["displacement"], dtype=float)
+        rotated_basis = r @ b_s
+        p_linear = rotated_basis @ rotated_basis.T
         y = _embedded_source_basis(b_s, c_s, r, t)
-        p = y @ y.T
-        # Eq. (7): both target plane basis vectors plus target displacement
-        # basis must be spanned by the transformed embedded source plane.
+        p_affine = y @ y.T
+        # Eq. (7): direction bases use the 3D projector P_{R·B}; only the
+        # displacement term uses the embedded affine Grassmannian projector.
         for j in range(2):
-            a_bar = np.r_[b_t[:, j], 0.0]
-            residuals.append(p @ a_bar - a_bar)
+            a = b_t[:, j]
+            residuals.append(p_linear @ a - a)
         c_tilde = _tilde(c_t)
-        residuals.append(p @ c_tilde - c_tilde)
+        residuals.append(p_affine @ c_tilde - c_tilde)
     return np.concatenate(residuals)
 
 

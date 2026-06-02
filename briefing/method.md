@@ -14,12 +14,14 @@ Under a rigid transform `(R, t)`, the basis rotates and the orthogonal
 displacement is updated as `R b0 + R(I-AA^T)R^T t`.  The transformed primitive
 is embedded as an orthonormal basis in one higher dimension.
 
-The paper's Eq. 7 minimizes the distance between each target embedded basis
-vector and its projection onto the transformed source embedded subspace.  For
-3D plane-to-plane registration, the rotation term can be expressed with plane
-normals and the translation term uses the embedded displacement basis.  The
-paper also proposes Branch-and-Bound inlier-set maximization for robust global
-search and local LM refinement.
+The paper's Eq. 7 minimizes two coupled residual families: target direction
+basis vectors are projected onto the rotated source linear subspace in the
+original 3D space, and the target displacement basis is projected onto the
+transformed source primitive embedded in one higher dimension.  For 3D
+plane-to-plane registration, the rotation term can also be expressed with
+plane normals and the translation term uses the embedded displacement basis.
+The paper also proposes Branch-and-Bound inlier-set maximization for robust
+global search and local LM refinement.
 
 ## Main Claims
 

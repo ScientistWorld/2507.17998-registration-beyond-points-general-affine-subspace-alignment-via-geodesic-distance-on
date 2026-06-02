@@ -17,13 +17,16 @@ def translation_error_percent(t_est: np.ndarray, t_gt: np.ndarray) -> float:
 
 
 def evaluate_one(data_path: Path, predictions: list[Path]) -> dict:
+    if not data_path.exists():
+        raise FileNotFoundError(f"missing evaluation data: {data_path}")
+    missing = [str(path) for path in predictions if not path.exists()]
+    if missing:
+        raise FileNotFoundError("missing prediction file(s): " + ", ".join(missing))
     data = json.loads(data_path.read_text())
     r_gt = np.asarray(data["ground_truth"]["rotation"], dtype=float)
     t_gt = np.asarray(data["ground_truth"]["translation"], dtype=float)
     results = {}
     for path in predictions:
-        if not path.exists():
-            continue
         pred = json.loads(path.read_text())
         name = pred["method"]
         r = np.asarray(pred["rotation"], dtype=float)
@@ -72,10 +75,8 @@ def evaluate_suite(output: Path) -> None:
     ]
     experiments = {}
     for name, data_path, preds in specs:
-        if data_path.exists():
-            results = evaluate_one(data_path, preds)
-            if results:
-                experiments[name] = {"results": results}
+        results = evaluate_one(data_path, preds)
+        experiments[name] = {"results": results}
     if not experiments:
         evaluate(Path("data/plane_registration.json"), [
             Path("checkpoints/plane_parameter_lstsq.json"),

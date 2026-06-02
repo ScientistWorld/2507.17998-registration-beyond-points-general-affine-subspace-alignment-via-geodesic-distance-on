@@ -15,4 +15,4 @@ PYTHON_BIN="${PYTHON:-python3}"
 "${PYTHON_BIN}" method/grassmann.py \
   --input data/plane_registration.json \
   --output checkpoints/grassmann_refine.json
-bash scripts/evaluate.sh
+bash scripts/evaluate.sh checkpoints/grassmann_refine.json

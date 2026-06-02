@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: core_claim**
 
 ## Progress Log
 
@@ -9,5 +9,12 @@
 - Added three settings with 0%, 5%, and 10% fitted-point outlier ratios; the Grassmann method substantially improves rotation and translation error over the signed plane-parameter baseline in all three.
 - Packaged reusable data generation, method, baseline, and evaluator scripts; `scripts/reproduce.sh` runs the full suite and writes `scoring/scores.json`.
 
+### [2026-06-02 18:05] - core_claim
+- Continuation audit reset the accepted milestone to `core_claim`.
+- Confirmed the implementation is a real affine Grassmannian plane-to-plane projection-residual solver rather than a surrogate.
+- Fixed the active residual to separate Eq. (7)'s 3D direction projection from the 4D affine displacement projection.
+- Revised the signed plane-parameter baseline so rotation is sign-invariant and the comparison focuses on translation ambiguity.
+- Hardened evaluation to fail on missing declared data or prediction artifacts; submitting a CPU job to rerun the three-setting suite before restoring `core_claim_plus`.
+
 ## Stop Justification
-- Not stopped yet; submitting a CPU reproducibility job to verify the packaged suite after the continuation audit.
+- Not stopped yet; submitting a CPU reproducibility job to verify the hardened packaged suite.

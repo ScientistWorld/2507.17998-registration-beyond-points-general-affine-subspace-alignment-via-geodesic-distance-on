@@ -30,9 +30,16 @@ mkdir -p scoring
 if [ "${1:-}" = "--suite" ]; then
   "${PYTHON_BIN}" eval/evaluate_registration.py --suite --output scoring/scores.json
 else
+  if [ "$#" -gt 0 ]; then
+    predictions=("$@")
+  else
+    predictions=(
+      checkpoints/plane_parameter_lstsq.json
+      checkpoints/grassmann_refine.json
+    )
+  fi
   "${PYTHON_BIN}" eval/evaluate_registration.py \
     --data data/plane_registration.json \
     --output scoring/scores.json \
-    checkpoints/plane_parameter_lstsq.json \
-    checkpoints/grassmann_refine.json
+    "${predictions[@]}"
 fi

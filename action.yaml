@@ -4,5 +4,5 @@
 action: submit
 gpus: 0
 test: true
-milestone: core_claim_plus
-notes: "CPU smoke job: rerun the packaged synthetic plane-registration suite and validate scores against reference."
+milestone: core_claim
+notes: "CPU smoke job: rerun the corrected Eq. 7 plane-registration method, fairer signed-parameter baseline, hardened evaluator, and validate scores."
