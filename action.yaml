@@ -2,8 +2,8 @@
 # Once you set action to 'done', STOP immediately.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: done
+action: pending
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Plane-correspondence split: train uses 7 fixed plane normals, test uses 6 held-out normals; 3 existing metrics per slice; scripts written, scores produced later."
+notes: ""
