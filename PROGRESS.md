@@ -9,6 +9,10 @@ plane-parameter least-squares baseline is implemented in
 `baseline/plane_parameter.py`, and `eval/evaluate_registration.py` scores
 method outputs without importing from `method/`.
 
+The current package is ready for a CPU reproducibility check through
+`scripts/run.sh`, which calls `scripts/reproduce.sh` and then
+`python3 validate.py --compare`.
+
 ## Results
 
 The expanded CPU rerun completed successfully and passed
@@ -29,6 +33,10 @@ Higher milestones would require reproducing additional paper task families,
 especially line-to-line RGB-D odometry or line-to-plane PnL, and implementing
 the paper's BnB inlier-set maximization rather than only the LM refinement
 path for plane-to-plane registration.
+
+Continuation audit: the workspace is internally consistent at
+`core_claim_plus`; the next action is a CPU job submission to verify the
+packaged suite in the scheduler container.
 
 ## Issues
 
