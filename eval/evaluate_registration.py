@@ -7,6 +7,13 @@ from pathlib import Path
 import numpy as np
 
 
+def _unit(v: np.ndarray) -> np.ndarray:
+    n = np.linalg.norm(v)
+    if n < 1e-12:
+        raise ValueError("zero-length vector")
+    return v / n
+
+
 def rotation_error_deg(r_est: np.ndarray, r_gt: np.ndarray) -> float:
     val = (np.trace(r_est.T @ r_gt) - 1.0) / 2.0
     return float(np.degrees(np.arccos(np.clip(val, -1.0, 1.0))))
@@ -14,6 +21,20 @@ def rotation_error_deg(r_est: np.ndarray, r_gt: np.ndarray) -> float:
 
 def translation_error_percent(t_est: np.ndarray, t_gt: np.ndarray) -> float:
     return float(np.linalg.norm(t_est - t_gt) / max(np.linalg.norm(t_gt), 1e-12) * 100.0)
+
+
+def plane_offset_rmse(r_est: np.ndarray, t_est: np.ndarray, source: list[dict], target: list[dict]) -> float:
+    residuals = []
+    for src, dst in zip(source, target):
+        n_source = _unit(np.asarray(src["normal"], dtype=float))
+        source_displacement = np.asarray(src["displacement"], dtype=float)
+        n_moved = _unit(r_est @ n_source)
+        moved_displacement = r_est @ source_displacement + np.outer(n_moved, n_moved) @ t_est
+
+        n_target = _unit(np.asarray(dst["normal"], dtype=float))
+        target_displacement = np.asarray(dst["displacement"], dtype=float)
+        residuals.append(float(n_target @ (moved_displacement - target_displacement)))
+    return float(np.sqrt(np.mean(np.square(residuals))))
 
 
 def evaluate_one(data_path: Path, predictions: list[Path]) -> dict:
@@ -25,6 +46,8 @@ def evaluate_one(data_path: Path, predictions: list[Path]) -> dict:
     data = json.loads(data_path.read_text())
     r_gt = np.asarray(data["ground_truth"]["rotation"], dtype=float)
     t_gt = np.asarray(data["ground_truth"]["translation"], dtype=float)
+    source = data["source"]
+    target = data["target"]
     results = {}
     for path in predictions:
         pred = json.loads(path.read_text())
@@ -34,7 +57,8 @@ def evaluate_one(data_path: Path, predictions: list[Path]) -> dict:
         results[name] = {
             "rotation_error_deg": rotation_error_deg(r, r_gt),
             "translation_error_percent": translation_error_percent(t, t_gt),
-            "num_planes": float(len(data["source"])),
+            "plane_offset_rmse": plane_offset_rmse(r, t, source, target),
+            "num_planes": float(len(source)),
         }
     return results
 

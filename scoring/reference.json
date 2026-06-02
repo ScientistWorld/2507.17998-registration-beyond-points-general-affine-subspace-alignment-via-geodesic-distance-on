@@ -31,12 +31,14 @@
                     "type": "baseline",
                     "translation_error_percent": 174.8654788409207,
                     "rotation_error_deg": 0.1025112724127392,
+                    "plane_offset_rmse": 1.5408924780311934,
                     "num_planes": 13.0
                 },
                 "grassmann_refine": {
                     "type": "proposed",
                     "translation_error_percent": 0.2941367634019644,
                     "rotation_error_deg": 0.10271678472052434,
+                    "plane_offset_rmse": 0.0044511454731466955,
                     "num_planes": 13.0
                 }
             }
@@ -72,12 +74,14 @@
                     "type": "baseline",
                     "translation_error_percent": 172.1290020657259,
                     "rotation_error_deg": 3.3800602318045705,
+                    "plane_offset_rmse": 1.3931699067919816,
                     "num_planes": 13.0
                 },
                 "grassmann_refine": {
                     "type": "proposed",
                     "translation_error_percent": 17.99285635059572,
                     "rotation_error_deg": 4.194009977888098,
+                    "plane_offset_rmse": 0.15773638443875806,
                     "num_planes": 13.0
                 }
             }
@@ -113,12 +117,14 @@
                     "type": "baseline",
                     "translation_error_percent": 179.066168754142,
                     "rotation_error_deg": 7.820490970992195,
+                    "plane_offset_rmse": 1.3994797533578942,
                     "num_planes": 13.0
                 },
                 "grassmann_refine": {
                     "type": "proposed",
                     "translation_error_percent": 18.15448044662093,
                     "rotation_error_deg": 5.956925451903087,
+                    "plane_offset_rmse": 0.1976498465408788,
                     "num_planes": 13.0
                 }
             }

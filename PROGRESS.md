@@ -19,6 +19,11 @@ silently writing partial scores.  `scripts/method.sh` and
 `scripts/evaluate.sh`, while `scripts/reproduce.sh` still evaluates the full
 suite.
 
+Packaging audit update: the canonical full-suite evaluator now writes the
+declared `plane_offset_rmse` metric to `scoring/scores.json`, and
+`scripts/run.sh` refreshes that canonical score file before running the
+supplemental train/test split diagnostics.
+
 ## Results
 
 Scheduler job `bd5de5ed-df6` completed with exit code 0 and reran the full

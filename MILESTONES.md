@@ -21,5 +21,10 @@
 - `python3 validate.py --compare` passed inside the container after regenerating `scoring/scores.json`.
 - Corrected Grassmann refinement beat the signed plane-parameter baseline on translation error for clean, 5%, and 10% outlier settings while keeping the same 13-plane constraint.
 
+### [2026-06-02 17:57] - core_claim_plus
+- Fixed the canonical evaluator to emit the declared `plane_offset_rmse` metric.
+- Updated `reference.json`, `scores.json`, and `TARGETS.md` so scored metrics and documentation agree.
+- Updated `scripts/run.sh` to regenerate canonical `scoring/scores.json` before the supplemental split diagnostics; submitting a CPU verification job.
+
 ## Stop Justification
-- Completed at milestone `core_claim_plus`.
+- Not stopped this turn; a CPU verification job is pending for the packaging fix.

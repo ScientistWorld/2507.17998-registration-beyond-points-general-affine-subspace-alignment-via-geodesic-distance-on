@@ -13,5 +13,7 @@ set -e
 
 cd /home/user
 
+bash scripts/reproduce.sh
 bash scripts/evaluate_train.sh --suite /home/user/checkpoints
 bash scripts/evaluate_test.sh --suite /home/user/checkpoints
+python3 validate.py --compare
