@@ -27,8 +27,6 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: submit
-gpus: 0
-test: true
-milestone: method_runs
-notes: "CPU rerun after correcting the synthetic plane displacement transform and Grassmann translation initializer; regenerate data, predictions, scores, and validate."
+action: done
+milestone: core_claim
+notes: "Reproduced the central affine Grassmannian plane-registration claim on the scaled synthetic task; method beats the signed plane-parameter baseline and validation passes."
