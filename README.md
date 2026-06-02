@@ -169,7 +169,7 @@ and 5 percent outlier-corrupted samples during target plane fitting.
 
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: core_claim**
 
 ## Stop Justification
-- Completed at milestone `core_claim_plus`.
+- Completed at milestone `core_claim`.
