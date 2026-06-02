@@ -6,7 +6,7 @@
 
 ### [2026-06-02 17:27] - core_claim_plus
 - Implemented and scored the paper's affine Grassmannian plane-to-plane projection residual on a fixed synthetic object-registration analogue.
-- Added three settings with 0%, 5%, and 10% fitted-point outlier ratios; the Grassmann method substantially improves rotation and translation error over the signed plane-parameter baseline in all three.
+- Added three settings with 0%, 5%, and 10% fitted-point outlier ratios; the Grassmann method substantially improves translation error and plane-offset consistency over the signed plane-parameter baseline, while rotation remains a tracked constraint metric.
 - Packaged reusable data generation, method, baseline, and evaluator scripts; `scripts/reproduce.sh` runs the full suite and writes `scoring/scores.json`.
 
 ### [2026-06-02 18:05] - core_claim

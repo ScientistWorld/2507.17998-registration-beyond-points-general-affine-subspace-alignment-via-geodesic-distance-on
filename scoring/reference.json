@@ -14,7 +14,7 @@
                 "rotation_error_deg": {
                     "higher_is_better": false,
                     "coefficient": -0.5,
-                    "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
+                    "description": "Ground-truth SO(3) rotation error computed from acos((trace(R_hat^T R_gt)-1)/2), in degrees."
                 },
                 "plane_offset_rmse": {
                     "higher_is_better": false,
@@ -58,7 +58,7 @@
                 "rotation_error_deg": {
                     "higher_is_better": false,
                     "coefficient": -0.5,
-                    "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
+                    "description": "Ground-truth SO(3) rotation error computed from acos((trace(R_hat^T R_gt)-1)/2), in degrees."
                 },
                 "plane_offset_rmse": {
                     "higher_is_better": false,
@@ -102,7 +102,7 @@
                 "rotation_error_deg": {
                     "higher_is_better": false,
                     "coefficient": -0.5,
-                    "description": "Root-mean-square angular mismatch between transformed source-plane normals and target-plane normals on the scored slice."
+                    "description": "Ground-truth SO(3) rotation error computed from acos((trace(R_hat^T R_gt)-1)/2), in degrees."
                 },
                 "plane_offset_rmse": {
                     "higher_is_better": false,
