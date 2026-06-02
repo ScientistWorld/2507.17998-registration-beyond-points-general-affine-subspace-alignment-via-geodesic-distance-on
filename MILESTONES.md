@@ -31,5 +31,10 @@
 - Tightened method-agnostic evaluation documentation and added explicit `reference.json` notes for the scaled synthetic target values.
 - Removed tracked generated job and trajectory logs from the reusable gym.
 
+### [2026-06-02 18:09] - core_claim_plus
+- Made the canonical `scripts/evaluate.sh --suite` path discover compatible method prediction artifacts instead of scoring only built-in files.
+- CPU verification job `e40e5cb7-0d5` completed with exit code 0 after rerunning `scripts/run.sh`.
+- `python3 validate.py --compare` passed in-container, including method-output evaluation, train/test independence, and method-key consistency checks.
+
 ## Stop Justification
 - Completed at milestone `core_claim_plus`.

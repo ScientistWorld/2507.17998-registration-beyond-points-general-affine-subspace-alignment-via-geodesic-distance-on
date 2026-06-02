@@ -24,6 +24,11 @@ declared `plane_offset_rmse` metric to `scoring/scores.json`, and
 `scripts/run.sh` refreshes that canonical score file before running the
 supplemental train/test split diagnostics.
 
+Final verification update: the canonical `scripts/evaluate.sh --suite` entry
+point now discovers compatible prediction artifacts under a checkpoint
+directory, matching the reusable method interface already used by the
+train/test evaluators.
+
 ## Results
 
 Scheduler job `bd5de5ed-df6` completed with exit code 0 and reran the full
@@ -39,6 +44,12 @@ scaled synthetic plane-registration task:
 This supports the paper's central claim for plane registration: optimizing the
 affine Grassmannian plane representation avoids the signed-parameter ambiguity
 that breaks direct plane-parameter least squares.
+
+Final CPU verification job `e40e5cb7-0d5` also completed with exit code 0.  It
+reran `scripts/run.sh` after the canonical evaluator-discovery fix and passed
+`python3 validate.py --compare`, including the structural gym checks for
+method/eval separation, train/test independence, method-key consistency, and
+primary-metric discrimination.
 
 Continuation fix: `method/grassmann.py` now follows Eq. (7) more directly by
 using the 3D rotated-plane projector for direction-basis residuals and the 4D

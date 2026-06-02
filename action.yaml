@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
-test: true
+test: false
 milestone: core_claim_plus
-notes: "Final verification CPU test: rerun reproduce/evaluate/validate after making canonical suite evaluation discover method outputs."
+notes: "Final verification passed in CPU job e40e5cb7-0d5; gym ready at core_claim_plus with documented synthetic-data limitation."
