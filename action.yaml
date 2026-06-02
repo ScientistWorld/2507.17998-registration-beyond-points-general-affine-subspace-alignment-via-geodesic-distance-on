@@ -1,5 +1,5 @@
-action: done
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: core_claim_plus
-notes: "Packaging audit passed: no external artifacts are required, download.sh is an idempotent no-op, and no shared paths were found."
+notes: "CPU verification job: rerun canonical reproduction, supplemental train/test evaluation, and validate.py --compare after fixing the score metric contract."
