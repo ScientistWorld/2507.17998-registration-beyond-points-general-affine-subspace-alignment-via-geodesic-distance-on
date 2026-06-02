@@ -160,6 +160,25 @@ def _projected_translation_error_percent(
     return rmse * math.sqrt(3.0) / max(float(np.linalg.norm(t_gt)), 1e-12) * 100.0
 
 
+def _plane_offset_rmse(
+    r_est: np.ndarray,
+    t_est: np.ndarray,
+    source_planes: list[dict],
+    target_planes: list[dict],
+) -> float:
+    residuals = []
+    for src, dst in zip(source_planes, target_planes):
+        n_source = _unit(np.asarray(src["normal"], dtype=float))
+        source_displacement = np.asarray(src["displacement"], dtype=float)
+        n_moved = _unit(r_est @ n_source)
+        moved_displacement = r_est @ source_displacement + np.outer(n_moved, n_moved) @ t_est
+
+        n_target = _unit(np.asarray(dst["normal"], dtype=float))
+        target_displacement = np.asarray(dst["displacement"], dtype=float)
+        residuals.append(float(n_target @ (moved_displacement - target_displacement)))
+    return float(np.sqrt(np.mean(np.square(residuals))))
+
+
 def evaluate_one(data_path: Path, predictions: list[Path], indices: tuple[int, ...]) -> dict:
     data = _load_json(data_path)
     t_gt = np.asarray(data["ground_truth"]["translation"], dtype=float)
@@ -176,6 +195,8 @@ def evaluate_one(data_path: Path, predictions: list[Path], indices: tuple[int, .
         np.asarray(target[i]["normal"], dtype=float)
         for i in indices
     ]
+    source_planes = [source[i] for i in indices]
+    target_planes = [target[i] for i in indices]
 
     results = {}
     for path in _dedupe_predictions(predictions):
@@ -190,7 +211,10 @@ def evaluate_one(data_path: Path, predictions: list[Path], indices: tuple[int, .
             "rotation_error_deg": _rotation_normal_error_deg(
                 r_est, source_normals, target_normals
             ),
-            "num_planes": float(len(indices)),
+            "plane_offset_rmse": _plane_offset_rmse(
+                r_est, t_est, source_planes, target_planes
+            ),
+            "num_planes": float(len(source)),
         }
     return results
 
