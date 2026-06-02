@@ -37,6 +37,13 @@ visible from this container, but each job reported exit code 0 and wrote the
 expected workspace artifacts.  Validation was rerun locally with
 `python validate.py --compare`.
 
+Continuation audit found a script portability issue: shell entry points used
+`python`, which was shadowed by a Node-managed shim in the login environment
+and lacked NumPy.  This was fixed by using `${PYTHON:-python3}` consistently in
+scripts and installing dependencies into that interpreter from
+`environment/setup.sh`.  After the fix, standalone evaluation and full
+reproduction both pass with `python3 validate.py --compare`.
+
 ## Deviations from Paper
 
 The paper's object-registration experiment uses the Space Station CAD model

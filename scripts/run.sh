@@ -12,6 +12,7 @@
 set -e
 
 cd /home/user
+PYTHON_BIN="${PYTHON:-python3}"
 
 bash scripts/reproduce.sh
-python validate.py --compare
+"${PYTHON_BIN}" validate.py --compare

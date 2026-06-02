@@ -16,9 +16,10 @@
 set -e
 
 cd /home/user
+PYTHON_BIN="${PYTHON:-python3}"
 
-python data/synthetic_planes.py --output data/plane_registration.json
-python baseline/plane_parameter.py \
+"${PYTHON_BIN}" data/synthetic_planes.py --output data/plane_registration.json
+"${PYTHON_BIN}" baseline/plane_parameter.py \
   --input data/plane_registration.json \
   --output checkpoints/plane_parameter_lstsq.json
 bash scripts/evaluate.sh

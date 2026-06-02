@@ -23,13 +23,14 @@
 set -e
 
 cd /home/user
+PYTHON_BIN="${PYTHON:-python3}"
 
 mkdir -p scoring
 
 if [ "${1:-}" = "--suite" ]; then
-  python eval/evaluate_registration.py --suite --output scoring/scores.json
+  "${PYTHON_BIN}" eval/evaluate_registration.py --suite --output scoring/scores.json
 else
-  python eval/evaluate_registration.py \
+  "${PYTHON_BIN}" eval/evaluate_registration.py \
     --data data/plane_registration.json \
     --output scoring/scores.json \
     checkpoints/plane_parameter_lstsq.json \
