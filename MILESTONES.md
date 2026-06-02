@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: core_claim_plus**
 
 ## Progress Log
 
@@ -16,5 +16,10 @@
 - Revised the signed plane-parameter baseline so rotation is sign-invariant and the comparison focuses on translation ambiguity.
 - Hardened evaluation to fail on missing declared data or prediction artifacts; submitting a CPU job to rerun the three-setting suite before restoring `core_claim_plus`.
 
+### [2026-06-02 18:37] - core_claim_plus
+- CPU scheduler job `bd5de5ed-df6` reran `scripts/run.sh` successfully in 36.7 seconds with exit code 0.
+- `python3 validate.py --compare` passed inside the container after regenerating `scoring/scores.json`.
+- Corrected Grassmann refinement beat the signed plane-parameter baseline on translation error for clean, 5%, and 10% outlier settings while keeping the same 13-plane constraint.
+
 ## Stop Justification
-- Not stopped yet; submitting a CPU reproducibility job to verify the hardened packaged suite.
+- Completed at `core_claim_plus`.  Higher milestones would require implementing the paper's BnB solver and additional RGB-D odometry / PnL / localization task families, which are beyond this compact plane-to-plane reproduction.

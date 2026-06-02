@@ -9,9 +9,8 @@ plane-parameter least-squares baseline is implemented in
 `baseline/plane_parameter.py`, and `eval/evaluate_registration.py` scores
 method outputs without importing from `method/`.
 
-The current package is ready for a CPU reproducibility check through
-`scripts/run.sh`, which calls `scripts/reproduce.sh` and then
-`python3 validate.py --compare`.
+The current package is verified through `scripts/run.sh`, which calls
+`scripts/reproduce.sh` and then `python3 validate.py --compare`.
 
 Continuation audit hardening: `eval/evaluate_registration.py` now raises an
 error when declared data or prediction artifacts are missing, instead of
@@ -22,16 +21,15 @@ suite.
 
 ## Results
 
-The previous expanded CPU rerun completed successfully and passed
-`python validate.py --compare`.  After the continuation reset and subsequent
-residual/baseline fixes, the accepted milestone is conservatively held at
-`core_claim` until the hardened evaluator is rerun in the scheduler container.
-The old `core_claim_plus` numbers below are superseded and retained only as an
-audit trail:
+Scheduler job `bd5de5ed-df6` completed with exit code 0 and reran the full
+three-setting suite with the corrected Eq. 7 residual, fairer signed-parameter
+baseline, and hardened evaluator.  `python3 validate.py --compare` passed
+inside the container.  The reproduction reaches `core_claim_plus` on the
+scaled synthetic plane-registration task:
 
-- 0% outliers: baseline 329.69% translation / 179.80 deg rotation; Grassmann 0.37% / 0.15 deg
-- 5% outliers: baseline 296.28% translation / 178.25 deg rotation; Grassmann 13.63% / 2.87 deg
-- 10% outliers: baseline 282.02% translation / 174.85 deg rotation; Grassmann 22.65% / 8.56 deg
+- 0% outliers: baseline 174.87% translation / 0.10 deg rotation; Grassmann 0.29% / 0.10 deg
+- 5% outliers: baseline 172.13% translation / 3.38 deg rotation; Grassmann 17.99% / 4.19 deg
+- 10% outliers: baseline 179.07% translation / 7.82 deg rotation; Grassmann 18.15% / 5.96 deg
 
 This supports the paper's central claim for plane registration: optimizing the
 affine Grassmannian plane representation avoids the signed-parameter ambiguity
@@ -51,16 +49,11 @@ especially line-to-line RGB-D odometry or line-to-plane PnL, and implementing
 the paper's BnB inlier-set maximization rather than only the LM refinement
 path for plane-to-plane registration.
 
-Continuation audit: the workspace is internally consistent for `core_claim`.
-Restoring `core_claim_plus` depends on the next CPU job rerunning the packaged
-suite with the hardened evaluator.
-
 ## Issues
 
-The scheduler-provided stdout/stderr paths for both completed jobs were not
-visible from this container, but each job reported exit code 0 and wrote the
-expected workspace artifacts.  Validation was rerun locally with
-`python validate.py --compare`.
+The latest job logs are available under `jobs/bd5de5ed-df6/`.  The stdout log
+contains the successful validation table and the stderr log only contains Hive
+metadata.
 
 Continuation audit found a script portability issue: shell entry points used
 `python`, which was shadowed by a Node-managed shim in the login environment
