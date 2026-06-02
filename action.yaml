@@ -1,5 +1,5 @@
-action: done
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: core_claim_plus
-notes: "Final validation passed after audit documentation fixes; workspace is ready as a core_claim_plus gym with documented synthetic-data limitation."
+notes: "Final verification CPU test: rerun reproduce/evaluate/validate after making canonical suite evaluation discover method outputs."
