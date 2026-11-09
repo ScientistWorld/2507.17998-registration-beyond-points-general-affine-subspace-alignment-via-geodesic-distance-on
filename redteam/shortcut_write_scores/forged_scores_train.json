@@ -1,0 +1,83 @@
+{
+  "_slice": "train",
+  "experiments": {
+    "synthetic_plane_registration_clean": {
+      "slice": "train",
+      "split_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": -1000000000000.0,
+          "rotation_error_deg": -1000000000000.0,
+          "plane_offset_rmse": -1000000000000.0,
+          "num_planes": 13.0
+        },
+        "plane_parameter_lstsq": {
+          "translation_error_percent": -1000000000000.0,
+          "rotation_error_deg": -1000000000000.0,
+          "plane_offset_rmse": -1000000000000.0,
+          "num_planes": 13.0
+        }
+      }
+    },
+    "synthetic_plane_registration": {
+      "slice": "train",
+      "split_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": -1000000000000.0,
+          "rotation_error_deg": -1000000000000.0,
+          "plane_offset_rmse": -1000000000000.0,
+          "num_planes": 13.0
+        },
+        "plane_parameter_lstsq": {
+          "translation_error_percent": -1000000000000.0,
+          "rotation_error_deg": -1000000000000.0,
+          "plane_offset_rmse": -1000000000000.0,
+          "num_planes": 13.0
+        }
+      }
+    },
+    "synthetic_plane_registration_outlier_0.10": {
+      "slice": "train",
+      "split_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": -1000000000000.0,
+          "rotation_error_deg": -1000000000000.0,
+          "plane_offset_rmse": -1000000000000.0,
+          "num_planes": 13.0
+        },
+        "plane_parameter_lstsq": {
+          "translation_error_percent": -1000000000000.0,
+          "rotation_error_deg": -1000000000000.0,
+          "plane_offset_rmse": -1000000000000.0,
+          "num_planes": 13.0
+        }
+      }
+    }
+  }
+}

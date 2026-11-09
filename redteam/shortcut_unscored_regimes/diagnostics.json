@@ -1,0 +1,20 @@
+{
+  "0.00": {
+    "determinant": 1.0,
+    "orthogonality_error": 0.0,
+    "true_translation_error_percent": 100.0,
+    "true_rotation_error_deg": 56.78014997665353
+  },
+  "0.05": {
+    "determinant": 1.0,
+    "orthogonality_error": 1.2390412045633868e-16,
+    "true_translation_error_percent": 17.99285635059572,
+    "true_rotation_error_deg": 4.194009977888098
+  },
+  "0.10": {
+    "determinant": 1.0,
+    "orthogonality_error": 0.0,
+    "true_translation_error_percent": 100.0,
+    "true_rotation_error_deg": 56.78014997665353
+  }
+}

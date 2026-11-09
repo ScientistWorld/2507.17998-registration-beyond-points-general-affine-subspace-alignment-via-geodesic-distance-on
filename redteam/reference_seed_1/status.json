@@ -1,0 +1,6 @@
+{
+  "train_exit_code": 0,
+  "test_exit_code": 0,
+  "hidden_command": "bash scripts/evaluate_test.sh",
+  "evaluator_unchanged": true
+}

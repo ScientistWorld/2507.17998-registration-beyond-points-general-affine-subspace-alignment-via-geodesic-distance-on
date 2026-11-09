@@ -1,0 +1,83 @@
+{
+  "_slice": "train",
+  "experiments": {
+    "synthetic_plane_registration_clean": {
+      "slice": "train",
+      "split_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": 93.20497242978499,
+          "rotation_error_deg": 45.86604988031471,
+          "plane_offset_rmse": 1.0957818733043918,
+          "num_planes": 13.0
+        },
+        "plane_parameter_lstsq": {
+          "translation_error_percent": 130.6050303028249,
+          "rotation_error_deg": 0.21313579596673415,
+          "plane_offset_rmse": 1.1521584697708627,
+          "num_planes": 13.0
+        }
+      }
+    },
+    "synthetic_plane_registration": {
+      "slice": "train",
+      "split_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": 13.937495495763175,
+          "rotation_error_deg": 11.533079344945362,
+          "plane_offset_rmse": 0.16214003289158574,
+          "num_planes": 13.0
+        },
+        "plane_parameter_lstsq": {
+          "translation_error_percent": 152.7840295779659,
+          "rotation_error_deg": 11.26158149637026,
+          "plane_offset_rmse": 1.0645120063966298,
+          "num_planes": 13.0
+        }
+      }
+    },
+    "synthetic_plane_registration_outlier_0.10": {
+      "slice": "train",
+      "split_indices": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": 94.21712999268827,
+          "rotation_error_deg": 42.32796727240766,
+          "plane_offset_rmse": 0.9688186077095989,
+          "num_planes": 13.0
+        },
+        "plane_parameter_lstsq": {
+          "translation_error_percent": 143.86155474789615,
+          "rotation_error_deg": 14.668731483399482,
+          "plane_offset_rmse": 0.9998022825501914,
+          "num_planes": 13.0
+        }
+      }
+    }
+  }
+}

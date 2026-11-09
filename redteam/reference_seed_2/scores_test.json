@@ -1,0 +1,30 @@
+{
+  "_slice": "test",
+  "experiments": {
+    "synthetic_plane_registration": {
+      "slice": "test",
+      "split_indices": [
+        1,
+        3,
+        5,
+        7,
+        9,
+        11
+      ],
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": 21.94568361319511,
+          "rotation_error_deg": 8.640884462854721,
+          "plane_offset_rmse": 0.15243809608218042,
+          "num_planes": 13.0
+        },
+        "plane_parameter_lstsq": {
+          "translation_error_percent": 208.73123884645892,
+          "rotation_error_deg": 8.696085139870927,
+          "plane_offset_rmse": 1.6980228883980564,
+          "num_planes": 13.0
+        }
+      }
+    }
+  }
+}

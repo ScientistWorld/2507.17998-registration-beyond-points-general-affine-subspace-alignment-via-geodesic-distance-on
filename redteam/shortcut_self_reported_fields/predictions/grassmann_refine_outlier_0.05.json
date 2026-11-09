@@ -1,0 +1,32 @@
+{
+  "method": "grassmann_refine",
+  "rotation": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "translation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "translation_error_percent": -1000000000000.0,
+  "rotation_error_deg": -1000000000000.0,
+  "plane_offset_rmse": -1000000000000.0,
+  "cost": -1000000000000.0,
+  "nfev": 0,
+  "success": true,
+  "elapsed_seconds": -1000000000000.0
+}

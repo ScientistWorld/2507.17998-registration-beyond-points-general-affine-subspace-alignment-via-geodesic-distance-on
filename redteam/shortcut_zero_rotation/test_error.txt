@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/user/eval/test/evaluate.py", line 284, in <module>
+    main()
+  File "/home/user/eval/test/evaluate.py", line 280, in main
+    evaluate(args.data, predictions, args.output)
+  File "/home/user/eval/test/evaluate.py", line 233, in evaluate
+    "results": evaluate_one(data_path, predictions, SPLIT_INDICES),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/test/evaluate.py", line 211, in evaluate_one
+    "rotation_error_deg": _rotation_normal_error_deg(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/test/evaluate.py", line 143, in _rotation_normal_error_deg
+    moved = _unit(r_est @ n_source)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/test/evaluate.py", line 37, in _unit
+    raise ValueError("zero-length vector")
+ValueError: zero-length vector

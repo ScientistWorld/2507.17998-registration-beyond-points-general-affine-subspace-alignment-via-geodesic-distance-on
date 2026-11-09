@@ -1,0 +1,10 @@
+{
+  "method": "grassmann_refine",
+  "rotation": null,
+  "translation": null,
+  "cost": 0.0002634431642331826,
+  "nfev": 4,
+  "success": true,
+  "full_refine_cost": 0.0002634431642331826,
+  "fixed_rotation_cost": 0.0002634431642331939
+}

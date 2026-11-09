@@ -1,0 +1,367 @@
+{
+  "normalization": "population standard deviation over finite audit attempts only; actual future-attempt spread is unknown",
+  "unscored_experiments": [
+    "synthetic_plane_registration_clean",
+    "synthetic_plane_registration_outlier_0.10"
+  ],
+  "cohort": [
+    "better_robust_geometric",
+    "shortcut_seed_replay",
+    "shortcut_nonrigid_scale",
+    "weaker_without_sign_invariance",
+    "shortcut_write_scores",
+    "shortcut_self_reported_fields",
+    "shortcut_move_baseline",
+    "shortcut_unscored_regimes",
+    "shortcut_visible_answers",
+    "weaker_identity",
+    "shortcut_replace_fixed_data",
+    "reference_seed_0",
+    "better_sign_corrected",
+    "reference_seed_1",
+    "variant_linear_loss",
+    "reference_seed_2"
+  ],
+  "metric_std": {
+    "translation_error_percent": 56.37216534556063,
+    "rotation_error_deg": 15.57663248901463,
+    "plane_offset_rmse": 0.3782546156811283
+  },
+  "reference_seed_spread": {
+    "translation_error_percent": 0.0,
+    "rotation_error_deg": 0.0,
+    "plane_offset_rmse": 0.0,
+    "num_planes": 0.0
+  },
+  "attempts": {
+    "better_robust_geometric": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 8.388844482637712,
+        "rotation_error_deg": 8.614295224146886,
+        "plane_offset_rmse": 0.1799876152516849,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.10610418275719699,
+      "pairwise_rank_delta": 1.1
+    },
+    "shortcut_seed_replay": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 0.0,
+        "rotation_error_deg": 8.200237033274755,
+        "plane_offset_rmse": 0.15009737282867505,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.2029598922686099,
+      "pairwise_rank_delta": 1.9
+    },
+    "shortcut_nonrigid_scale": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 8.640884462854729,
+        "plane_offset_rmse": 0.15242060749467148,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 9.246992255326596e-06,
+      "pairwise_rank_delta": 0.4
+    },
+    "weaker_without_sign_invariance": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 208.73123884645892,
+        "rotation_error_deg": 8.696085139870927,
+        "plane_offset_rmse": 1.6980228883980564,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": -2.474823156377223,
+      "pairwise_rank_delta": -1.9
+    },
+    "shortcut_write_scores": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 107.6509789489236,
+        "rotation_error_deg": 47.47553577859599,
+        "plane_offset_rmse": 0.3900429709073045,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": -1.5090899300300795,
+      "pairwise_rank_delta": -1.9
+    },
+    "shortcut_nan": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 0.0,
+        "plane_offset_rmse": NaN,
+        "num_planes": 13.0
+      },
+      "rankable": false
+    },
+    "shortcut_self_reported_fields": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 107.6509789489236,
+        "rotation_error_deg": 47.47553577859599,
+        "plane_offset_rmse": 0.3900429709073045,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": -1.5090899300300795,
+      "pairwise_rank_delta": -1.9
+    },
+    "shortcut_move_baseline": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 8.640884462854721,
+        "plane_offset_rmse": 0.15243809608218042,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.0,
+      "pairwise_rank_delta": 0.0
+    },
+    "shortcut_unscored_regimes": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 8.640884462854721,
+        "plane_offset_rmse": 0.15243809608218042,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.0,
+      "pairwise_rank_delta": 0.0
+    },
+    "shortcut_visible_answers": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 0.0,
+        "rotation_error_deg": 8.200237033274755,
+        "plane_offset_rmse": 0.15009737282867505,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.2029598922686099,
+      "pairwise_rank_delta": 1.9
+    },
+    "weaker_identity": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 107.6509789489236,
+        "rotation_error_deg": 47.47553577859599,
+        "plane_offset_rmse": 0.3900429709073045,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": -1.5090899300300795,
+      "pairwise_rank_delta": -1.9
+    },
+    "shortcut_zero_rotation": {
+      "status": {
+        "train_exit_code": 1,
+        "test_exit_code": 1,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "rankable": false
+    },
+    "shortcut_replace_fixed_data": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 0.0,
+        "rotation_error_deg": 0.0,
+        "plane_offset_rmse": 0.0,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.41393423143121244,
+      "pairwise_rank_delta": 1.9
+    },
+    "reference_seed_0": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 8.640884462854721,
+        "plane_offset_rmse": 0.15243809608218042,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.0,
+      "pairwise_rank_delta": 0.0
+    },
+    "better_sign_corrected": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 11.6603552340455,
+        "rotation_error_deg": 8.696085139870927,
+        "plane_offset_rmse": 0.19588529338435248,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.06736859727532347,
+      "pairwise_rank_delta": 0.09999999999999998
+    },
+    "shortcut_empty": {
+      "status": {
+        "train_exit_code": 1,
+        "test_exit_code": 1,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "rankable": false
+    },
+    "reference_seed_1": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 8.640884462854721,
+        "plane_offset_rmse": 0.15243809608218042,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.0,
+      "pairwise_rank_delta": 0.0
+    },
+    "shortcut_null": {
+      "status": {
+        "train_exit_code": 1,
+        "test_exit_code": 1,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "rankable": false
+    },
+    "variant_linear_loss": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.326592082601508,
+        "rotation_error_deg": 8.70896481510046,
+        "plane_offset_rmse": 0.15225895488142308,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.004493161968546555,
+      "pairwise_rank_delta": 0.9
+    },
+    "reference_seed_2": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 8.640884462854721,
+        "plane_offset_rmse": 0.15243809608218042,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.0,
+      "pairwise_rank_delta": 0.0
+    },
+    "shortcut_infinity": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 0.0,
+        "plane_offset_rmse": NaN,
+        "num_planes": 13.0
+      },
+      "rankable": false
+    }
+  }
+}
