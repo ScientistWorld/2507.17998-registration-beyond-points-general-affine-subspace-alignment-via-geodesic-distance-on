@@ -2,7 +2,7 @@
     "experiments": {
         "object_registration": {
             "description": "Scaled analogue of the paper's Sec. 5.1 object registration: 13 paired planes fitted (RANSAC + least-squares refit) from 100 noisy point measurements each, 5/20/35/50 percent outlier points, random rigid transforms; scored on held-out instances.",
-            "notes": "PROVISIONAL values, replaced by the hardening job's measurements. The paper's Space Station model is not distributed and its Fig. 3 results are curves, so the results below are this gym's own measurements on its synthetic analogue; the paper's approximate curve readings are kept under _paper_reported_fig3_approx and are not on this gym's scale.",
+            "notes": "Results are this gym's hidden-test measurements (200 held-out instances, scoring/scores_test.json) for the registered solvers. The paper's Space Station model is not distributed and its Fig. 3 results are curves on a different object and scale, so they are kept only as approximate readings under _paper_reported_fig3_approx and are not targets for this gym.",
             "weight": 0.6,
             "primary_metric": "translation_error_percent",
             "metrics": {
@@ -20,34 +20,66 @@
             "results": {
                 "grassmann_refine": {
                     "type": "proposed",
-                    "translation_error_percent": 1.0,
-                    "rotation_error_deg": 0.5
+                    "translation_error_percent": 2.1900897381971585,
+                    "rotation_error_deg": 0.7384984414846423
                 },
                 "plane_parameter_lstsq": {
                     "type": "baseline",
-                    "translation_error_percent": 95.0,
-                    "rotation_error_deg": 0.5
+                    "translation_error_percent": 95.08648831519615,
+                    "rotation_error_deg": 0.7505018430489807
                 }
             },
             "_paper_reported_fig3_approx": {
                 "source": "Fig. 3 of the paper (Space Station model, 500 sets per outlier ratio), values read approximately from the plotted curves at 5% and 50% outliers and averaged over the plotted ratios 5-50%.",
                 "rotation_error_deg": {
-                    "LinEq": {"at_5pct": 1.75, "at_50pct": 1.93, "mean_5_50": 1.79},
-                    "Olsson": {"at_5pct": 2.9, "at_50pct": 4.8, "mean_5_50": 4.05},
-                    "Refine": {"at_5pct": 1.87, "at_50pct": 2.4, "mean_5_50": 2.06},
-                    "BnB": {"at_5pct": 1.73, "at_50pct": 1.9, "mean_5_50": 1.77}
+                    "LinEq": {
+                        "at_5pct": 1.75,
+                        "at_50pct": 1.93,
+                        "mean_5_50": 1.79
+                    },
+                    "Olsson": {
+                        "at_5pct": 2.9,
+                        "at_50pct": 4.8,
+                        "mean_5_50": 4.05
+                    },
+                    "Refine": {
+                        "at_5pct": 1.87,
+                        "at_50pct": 2.4,
+                        "mean_5_50": 2.06
+                    },
+                    "BnB": {
+                        "at_5pct": 1.73,
+                        "at_50pct": 1.9,
+                        "mean_5_50": 1.77
+                    }
                 },
                 "translation_error_percent": {
-                    "LinEq": {"at_5pct": 3.0, "at_50pct": 2.98, "mean_5_50": 2.85},
-                    "Olsson": {"at_5pct": 0.71, "at_50pct": 1.32, "mean_5_50": 1.08},
-                    "Refine": {"at_5pct": 0.57, "at_50pct": 0.71, "mean_5_50": 0.64},
-                    "BnB": {"at_5pct": 0.88, "at_50pct": 1.05, "mean_5_50": 0.98}
+                    "LinEq": {
+                        "at_5pct": 3.0,
+                        "at_50pct": 2.98,
+                        "mean_5_50": 2.85
+                    },
+                    "Olsson": {
+                        "at_5pct": 0.71,
+                        "at_50pct": 1.32,
+                        "mean_5_50": 1.08
+                    },
+                    "Refine": {
+                        "at_5pct": 0.57,
+                        "at_50pct": 0.71,
+                        "mean_5_50": 0.64
+                    },
+                    "BnB": {
+                        "at_5pct": 0.88,
+                        "at_50pct": 1.05,
+                        "mean_5_50": 0.98
+                    }
                 }
             }
         },
         "object_registration_mismatched": {
             "description": "Same object-registration task with 2, 3 or 4 of the 13 plane correspondences mismatched (targets cyclically permuted among the chosen planes), on top of 5/20/35/50 percent outlier points; scored on held-out instances.",
-            "notes": "PROVISIONAL values, replaced by the hardening job's measurements. Added where the paper's refinement falls short: the paper states that refining a linear solution depends on the initial solver filtering outlier correspondences, and reports Refine failing on the mismatch-heavy Replica Room1 sequence while its inlier-set-maximising BnB succeeds. The paper has no object-registration numbers for this setting.",
+            "notes": "Results are this gym's hidden-test measurements (120 held-out instances, scoring/scores_test.json). Added where the paper's refinement falls short: the paper states that refining a linear solution depends on the initial solver filtering outlier correspondences, and reports Refine failing on the mismatch-heavy Replica Room1 sequence while its inlier-set-maximising BnB succeeds. The paper has no object-registration numbers for this setting.",
             "weight": 0.4,
             "primary_metric": "translation_error_percent",
             "metrics": {
@@ -65,13 +97,13 @@
             "results": {
                 "grassmann_refine": {
                     "type": "proposed",
-                    "translation_error_percent": 10.0,
-                    "rotation_error_deg": 5.0
+                    "translation_error_percent": 13.165919496492522,
+                    "rotation_error_deg": 1.5322095765697759
                 },
                 "plane_parameter_lstsq": {
                     "type": "baseline",
-                    "translation_error_percent": 95.0,
-                    "rotation_error_deg": 10.0
+                    "translation_error_percent": 96.60661007040592,
+                    "rotation_error_deg": 13.878468859680234
                 }
             },
             "_paper_context": {

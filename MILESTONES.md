@@ -4,6 +4,11 @@
 
 ## Progress Log
 
+### [2026-11-09] - core_claim_plus (iteration 11, hardening)
+- Rebuilt the hidden test: held-out instances generated inside `eval/test/` from a hidden seed, solvers registered in `scripts/solvers/` run on inputs only, SO(3)/finite/complete-answer validation with failure at the metric caps, the paper's rotation and translation errors as scored metrics.
+- Experiments: `object_registration` (paper's Sec. 5.1 analogue, 5-50% outlier points, RANSAC plane fits, 200 test instances) and `object_registration_mismatched` (2-4 of 13 pairings wrong, 120 instances).
+- Hidden test: reference 2.19% / 0.74 deg and 13.17% / 1.53 deg vs signed-parameter baseline 95.1% / 0.75 deg and 96.6% / 13.9 deg; better variants rank above the reference beyond paired-bootstrap noise, all shortcuts score below it or fail (see `HARDENING.md`).
+
 ### [2026-06-02 17:27] - core_claim_plus
 - Implemented and scored the paper's affine Grassmannian plane-to-plane projection residual on a fixed synthetic object-registration analogue.
 - Added three settings with 0%, 5%, and 10% fitted-point outlier ratios; the Grassmann method substantially improves translation error and plane-offset consistency over the signed plane-parameter baseline, while rotation remains a tracked constraint metric.

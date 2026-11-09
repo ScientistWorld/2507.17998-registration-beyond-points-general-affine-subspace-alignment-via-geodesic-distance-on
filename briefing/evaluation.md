@@ -31,8 +31,8 @@ The solver writes
 ```
 
 with `x_target = R x_source + t`.  The solver must answer every instance with a
-finite proper rotation (`||R^T R - I||_F <= 1e-6`, `det R > 0`) and a finite
-translation.  If the solver exits non-zero, times out (3 h), omits any
+finite proper rotation (entries in [-1, 1], `||R^T R - I||_F <= 1e-6`,
+`det R > 0`) and a finite translation.  If the solver exits non-zero, times out (3 h), omits any
 instance, or returns any invalid pose, the whole run is scored as failed: the
 worst value of every metric in every experiment (100% and 180 degrees).  Any
 other field in the predictions file is ignored.
