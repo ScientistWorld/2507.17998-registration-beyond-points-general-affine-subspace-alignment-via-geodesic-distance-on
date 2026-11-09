@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
 test: true
-notes: "Run bundled redteam audit: three reference seeds, genuine quality variants, and exact no-argument hidden-test shortcut trials; restore artifacts between attempts."
+notes: "Finish scoring audit with one arbitrary-matrix shortcut check; fit only visible data, retain reference translation, run hidden test with no arguments, then refresh summary."

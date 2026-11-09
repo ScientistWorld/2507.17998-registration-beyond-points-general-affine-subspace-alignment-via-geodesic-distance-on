@@ -14,6 +14,7 @@
     "shortcut_move_baseline",
     "shortcut_unscored_regimes",
     "shortcut_visible_answers",
+    "shortcut_nonrigid_fit",
     "weaker_identity",
     "shortcut_replace_fixed_data",
     "reference_seed_0",
@@ -23,9 +24,9 @@
     "reference_seed_2"
   ],
   "metric_std": {
-    "translation_error_percent": 56.37216534556063,
-    "rotation_error_deg": 15.57663248901463,
-    "plane_offset_rmse": 0.3782546156811283
+    "translation_error_percent": 54.93569746612806,
+    "rotation_error_deg": 15.197937218511816,
+    "plane_offset_rmse": 0.37162486939564554
   },
   "reference_seed_spread": {
     "translation_error_percent": 0.0,
@@ -48,7 +49,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": 0.10610418275719699,
+      "audit_cohort_rank_delta": 0.10899911148282022,
       "pairwise_rank_delta": 1.1
     },
     "shortcut_seed_replay": {
@@ -65,7 +66,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": 0.2029598922686099,
+      "audit_cohort_rank_delta": 0.2082479357697691,
       "pairwise_rank_delta": 1.9
     },
     "shortcut_nonrigid_scale": {
@@ -82,7 +83,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": 9.246992255326596e-06,
+      "audit_cohort_rank_delta": 9.41195756740605e-06,
       "pairwise_rank_delta": 0.4
     },
     "weaker_without_sign_invariance": {
@@ -99,7 +100,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": -2.474823156377223,
+      "audit_cohort_rank_delta": -2.5327444728161788,
       "pairwise_rank_delta": -1.9
     },
     "shortcut_write_scores": {
@@ -116,7 +117,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": -1.5090899300300795,
+      "audit_cohort_rank_delta": -1.546739051782401,
       "pairwise_rank_delta": -1.9
     },
     "shortcut_nan": {
@@ -148,7 +149,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": -1.5090899300300795,
+      "audit_cohort_rank_delta": -1.546739051782401,
       "pairwise_rank_delta": -1.9
     },
     "shortcut_move_baseline": {
@@ -199,8 +200,25 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": 0.2029598922686099,
+      "audit_cohort_rank_delta": 0.2082479357697691,
       "pairwise_rank_delta": 1.9
+    },
+    "shortcut_nonrigid_fit": {
+      "status": {
+        "train_exit_code": 0,
+        "test_exit_code": 0,
+        "hidden_command": "bash scripts/evaluate_test.sh",
+        "evaluator_unchanged": true
+      },
+      "metrics": {
+        "translation_error_percent": 21.94568361319511,
+        "rotation_error_deg": 8.459802661180753,
+        "plane_offset_rmse": 0.03875186538383762,
+        "num_planes": 13.0
+      },
+      "rankable": true,
+      "audit_cohort_rank_delta": 0.06416205097690818,
+      "pairwise_rank_delta": 0.9
     },
     "weaker_identity": {
       "status": {
@@ -216,7 +234,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": -1.5090899300300795,
+      "audit_cohort_rank_delta": -1.546739051782401,
       "pairwise_rank_delta": -1.9
     },
     "shortcut_zero_rotation": {
@@ -242,7 +260,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": 0.41393423143121244,
+      "audit_cohort_rank_delta": 0.42391753235779367,
       "pairwise_rank_delta": 1.9
     },
     "reference_seed_0": {
@@ -276,7 +294,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": 0.06736859727532347,
+      "audit_cohort_rank_delta": 0.0693221146295494,
       "pairwise_rank_delta": 0.09999999999999998
     },
     "shortcut_empty": {
@@ -328,7 +346,7 @@
         "num_planes": 13.0
       },
       "rankable": true,
-      "audit_cohort_rank_delta": 0.004493161968546555,
+      "audit_cohort_rank_delta": 0.004611207629828883,
       "pairwise_rank_delta": 0.9
     },
     "reference_seed_2": {
