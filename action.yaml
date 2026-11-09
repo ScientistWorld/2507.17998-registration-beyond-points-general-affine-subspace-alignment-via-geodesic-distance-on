@@ -1,5 +1,8 @@
-action: done
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Final verification passed in CPU job e40e5cb7-0d5; gym ready at core_claim_plus with documented synthetic-data limitation."
+notes: ""
