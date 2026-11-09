@@ -1,4 +1,2 @@
-action: submit
-gpus: 0
-test: true
-notes: "Finish scoring audit with one arbitrary-matrix shortcut check; fit only visible data, retain reference translation, run hidden test with no arguments, then refresh summary."
+action: done
+notes: "Completed and committed 22-run scoring audit in REDTEAM.md and redteam/: honest quality check passes on the default slice, zero seed spread, major answer/data/nonrigid/coverage shortcuts confirmed, benchmark files restored."
