@@ -11,4 +11,5 @@
 
 set -e
 cd /home/user
-exec bash redteam/run_all.sh
+bash redteam/shortcut_nonrigid_fit/run.sh
+python3 redteam/harness.py summarize
