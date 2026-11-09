@@ -84,7 +84,7 @@
       },
       "rankable": true,
       "audit_cohort_rank_delta": 9.41195756740605e-06,
-      "pairwise_rank_delta": 0.4
+      "pairwise_rank_delta": -0.09999999999999998
     },
     "weaker_without_sign_invariance": {
       "status": {
@@ -381,5 +381,6 @@
       },
       "rankable": false
     }
-  }
+  },
+  "pairwise_normalization_note": "Uses exact emitted float differences; even roundoff is magnified in a two-attempt cohort. The scale shortcut therefore has a negative isolated pairwise score despite a positive audit-cohort score."
 }

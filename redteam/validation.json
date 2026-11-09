@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "all_22_attempts_ran": true,
+    "every_hidden_command_has_no_arguments": true,
+    "evaluator_unchanged_during_all_attempts": true,
+    "reference_reproduces_initial_test": true,
+    "reference_seeds_identical": true,
+    "seed_metric_spread_zero": true,
+    "honest_improvement_improves_both_true_pose_errors": true,
+    "honest_improvement_scores_higher_in_audit_cohort": true,
+    "weaker_ablation_scores_lower_in_every_metric": true,
+    "nonrigid_shortcut_dominates_reference": true,
+    "nonrigid_shortcut_is_not_a_rotation": true,
+    "unscored_regimes_shortcut_ties": true,
+    "protected_evaluator_hashes_restored": true,
+    "all_snapshotted_data_predictions_scores_restored": true,
+    "tracked_benchmark_files_restored_to_start": true,
+    "temporary_method_removed": true,
+    "audit_python_syntax_valid": true
+  },
+  "attempts": 22,
+  "finite_attempts": 17,
+  "jobs": [
+    {
+      "id": "98fe7b48-575",
+      "exit_code": 0
+    },
+    {
+      "id": "5e268621-de9",
+      "exit_code": 0
+    }
+  ],
+  "benchmark_start_commit": "4a9102e",
+  "remaining_benchmark_diff": []
+}

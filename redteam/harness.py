@@ -211,7 +211,7 @@ def summarize():
             delta = direction * (rows[case]['metrics'][m] - reference[m])
             if std[m]:
                 score += config['weight'] * coefficient * delta / std[m]
-            if abs(delta) > 1e-10:
+            if delta != 0:
                 pairwise += config['weight'] * coefficient * (2 if delta > 0 else -2)
         rows[case]['audit_cohort_rank_delta'] = score
         rows[case]['pairwise_rank_delta'] = pairwise

@@ -10,6 +10,10 @@
 # workspace or baked into the container before submitting.
 
 set -e
+
 cd /home/user
-bash redteam/shortcut_nonrigid_fit/run.sh
-python3 redteam/harness.py summarize
+
+bash scripts/reproduce.sh
+bash scripts/evaluate_train.sh --suite /home/user/checkpoints
+bash scripts/evaluate_test.sh --suite /home/user/checkpoints
+python3 validate.py --compare
