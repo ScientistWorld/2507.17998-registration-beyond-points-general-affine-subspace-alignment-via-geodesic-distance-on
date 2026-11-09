@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: core_claim_plus
-notes: "Resume hardening check after preemption: reset solver registry, reproduce reference+baseline on train/test, run remaining variants (robust geometric, linear-init ablation, weaker), 16 shortcuts and train-side runs through the no-arg hidden test; finished attempts are skipped."
+notes: "Hidden test rebuilt (hidden seeded instances, solver contract, SO(3)-validated paper pose metrics, mismatched-correspondence headroom experiment); better variants rank above the reference beyond paired noise, all 25 shortcut/weaker attempts score below or fail; see HARDENING.md."
