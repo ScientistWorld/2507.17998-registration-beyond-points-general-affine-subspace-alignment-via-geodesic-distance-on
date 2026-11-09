@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Hardening check: rebuilt hidden test (hidden seeded instances, solver contract, SO(3) validation, paper pose metrics, mismatched-correspondence headroom experiment); reproduce reference+baseline on train/test, then run better/weaker variants and 16 shortcuts through the no-arg hidden test."
+notes: "Resume hardening check after preemption: reset solver registry, reproduce reference+baseline on train/test, run remaining variants (robust geometric, linear-init ablation, weaker), 16 shortcuts and train-side runs through the no-arg hidden test; finished attempts are skipped."
