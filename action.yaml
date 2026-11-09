@@ -1,2 +1,8 @@
-action: done
-notes: "Completed and committed 22-run scoring audit in REDTEAM.md and redteam/: honest quality check passes on the default slice, zero seed spread, major answer/data/nonrigid/coverage shortcuts confirmed, benchmark files restored."
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
+test: false
+milestone: core_claim_plus
+notes: ""
