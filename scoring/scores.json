@@ -1,50 +1,32 @@
 {
+  "_slice": "train",
+  "_failed_methods": {},
   "experiments": {
-    "synthetic_plane_registration_clean": {
+    "object_registration": {
+      "slice": "train",
+      "num_instances": 200,
       "results": {
         "grassmann_refine": {
-          "rotation_error_deg": 0.10271678472052434,
-          "translation_error_percent": 0.2941367634019644,
-          "plane_offset_rmse": 0.004451145473146708,
-          "num_planes": 13.0
+          "translation_error_percent": 2.212307373223811,
+          "rotation_error_deg": 0.685000258490399
         },
         "plane_parameter_lstsq": {
-          "rotation_error_deg": 0.1025112724127392,
-          "translation_error_percent": 174.8654788409207,
-          "plane_offset_rmse": 1.5408924780311934,
-          "num_planes": 13.0
+          "translation_error_percent": 93.00859888811577,
+          "rotation_error_deg": 0.6868836939542922
         }
       }
     },
-    "synthetic_plane_registration": {
+    "object_registration_mismatched": {
+      "slice": "train",
+      "num_instances": 120,
       "results": {
         "grassmann_refine": {
-          "rotation_error_deg": 4.194009977888098,
-          "translation_error_percent": 17.99285635059572,
-          "plane_offset_rmse": 0.1577363844387581,
-          "num_planes": 13.0
+          "translation_error_percent": 13.059513078578224,
+          "rotation_error_deg": 2.9603928804116775
         },
         "plane_parameter_lstsq": {
-          "rotation_error_deg": 3.3800602318045705,
-          "translation_error_percent": 172.1290020657259,
-          "plane_offset_rmse": 1.3931699067919814,
-          "num_planes": 13.0
-        }
-      }
-    },
-    "synthetic_plane_registration_outlier_0.10": {
-      "results": {
-        "grassmann_refine": {
-          "rotation_error_deg": 5.956925451903087,
-          "translation_error_percent": 18.15448044662093,
-          "plane_offset_rmse": 0.19764984654087875,
-          "num_planes": 13.0
-        },
-        "plane_parameter_lstsq": {
-          "rotation_error_deg": 7.820490970992195,
-          "translation_error_percent": 179.066168754142,
-          "plane_offset_rmse": 1.3994797533578942,
-          "num_planes": 13.0
+          "translation_error_percent": 93.63921230106652,
+          "rotation_error_deg": 14.049759109056238
         }
       }
     }
