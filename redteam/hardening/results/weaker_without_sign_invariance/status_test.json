@@ -1,0 +1,14 @@
+{
+  "attempt": "weaker_without_sign_invariance",
+  "split": "test",
+  "command": "bash scripts/evaluate_test.sh --details /home/user/redteam/hardening/results/weaker_without_sign_invariance/details_test.json",
+  "returncode": 0,
+  "seconds": 135.3,
+  "files_changed_during_run_then_restored": [
+    "scripts/solvers/weaker_without_sign_invariance.sh (removed)",
+    "scripts/solvers/plane_parameter_lstsq.sh",
+    "scripts/solvers/grassmann_refine.sh",
+    "scoring/scores_test.json"
+  ],
+  "hidden_test_files_modified_during_run": []
+}

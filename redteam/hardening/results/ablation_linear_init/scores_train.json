@@ -1,0 +1,26 @@
+{
+  "_slice": "train",
+  "_failed_methods": {},
+  "experiments": {
+    "object_registration": {
+      "slice": "train",
+      "num_instances": 200,
+      "results": {
+        "ablation_linear_init": {
+          "translation_error_percent": 1.0559130812667126,
+          "rotation_error_deg": 0.6868836939544701
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "train",
+      "num_instances": 120,
+      "results": {
+        "ablation_linear_init": {
+          "translation_error_percent": 42.499346907711896,
+          "rotation_error_deg": 14.049759109056177
+        }
+      }
+    }
+  }
+}

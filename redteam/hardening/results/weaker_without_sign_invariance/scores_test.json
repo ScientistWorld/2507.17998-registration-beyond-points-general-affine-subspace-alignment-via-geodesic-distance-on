@@ -1,0 +1,26 @@
+{
+  "_slice": "test",
+  "_failed_methods": {},
+  "experiments": {
+    "object_registration": {
+      "slice": "test",
+      "num_instances": 200,
+      "results": {
+        "weaker_without_sign_invariance": {
+          "translation_error_percent": 95.08648831519615,
+          "rotation_error_deg": 0.7505018430489807
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "test",
+      "num_instances": 120,
+      "results": {
+        "weaker_without_sign_invariance": {
+          "translation_error_percent": 96.60661007040592,
+          "rotation_error_deg": 13.878468859680234
+        }
+      }
+    }
+  }
+}

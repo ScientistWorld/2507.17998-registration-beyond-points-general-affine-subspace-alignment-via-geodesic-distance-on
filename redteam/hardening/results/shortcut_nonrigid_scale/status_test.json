@@ -1,0 +1,14 @@
+{
+  "attempt": "shortcut_nonrigid_scale",
+  "split": "test",
+  "command": "bash scripts/evaluate_test.sh",
+  "returncode": 0,
+  "seconds": 5.5,
+  "files_changed_during_run_then_restored": [
+    "scripts/solvers/shortcut_nonrigid_scale.sh (removed)",
+    "scripts/solvers/plane_parameter_lstsq.sh",
+    "scripts/solvers/grassmann_refine.sh",
+    "scoring/scores_test.json"
+  ],
+  "hidden_test_files_modified_during_run": []
+}

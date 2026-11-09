@@ -1,0 +1,28 @@
+{
+  "_slice": "test",
+  "_failed_methods": {
+    "shortcut_nonrigid_scale": "inst-0000: rotation is not orthonormal (||R^T R - I||_F = 0.00347)"
+  },
+  "experiments": {
+    "object_registration": {
+      "slice": "test",
+      "num_instances": 200,
+      "results": {
+        "shortcut_nonrigid_scale": {
+          "translation_error_percent": 100.0,
+          "rotation_error_deg": 180.0
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "test",
+      "num_instances": 120,
+      "results": {
+        "shortcut_nonrigid_scale": {
+          "translation_error_percent": 100.0,
+          "rotation_error_deg": 180.0
+        }
+      }
+    }
+  }
+}

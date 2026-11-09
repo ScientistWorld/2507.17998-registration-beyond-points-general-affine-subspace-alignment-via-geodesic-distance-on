@@ -1,0 +1,14 @@
+{
+  "attempt": "weaker_linear_loss",
+  "split": "test",
+  "command": "bash scripts/evaluate_test.sh --details /home/user/redteam/hardening/results/weaker_linear_loss/details_test.json",
+  "returncode": 0,
+  "seconds": 166.2,
+  "files_changed_during_run_then_restored": [
+    "scripts/solvers/weaker_linear_loss.sh (removed)",
+    "scripts/solvers/plane_parameter_lstsq.sh",
+    "scripts/solvers/grassmann_refine.sh",
+    "scoring/scores_test.json"
+  ],
+  "hidden_test_files_modified_during_run": []
+}

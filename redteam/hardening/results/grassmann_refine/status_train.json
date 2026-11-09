@@ -1,0 +1,13 @@
+{
+  "attempt": "grassmann_refine",
+  "split": "train",
+  "command": "bash scripts/evaluate_train.sh --details /home/user/redteam/hardening/results/grassmann_refine/details_train.json",
+  "returncode": 0,
+  "seconds": 163.4,
+  "files_changed_during_run_then_restored": [
+    "scripts/solvers/plane_parameter_lstsq.sh",
+    "scripts/solvers/grassmann_refine.sh",
+    "scoring/scores_train.json"
+  ],
+  "hidden_test_files_modified_during_run": []
+}

@@ -1,0 +1,26 @@
+{
+  "_slice": "test",
+  "_failed_methods": {},
+  "experiments": {
+    "object_registration": {
+      "slice": "test",
+      "num_instances": 200,
+      "results": {
+        "shortcut_self_reported_fields": {
+          "translation_error_percent": 100.0,
+          "rotation_error_deg": 124.91131333023546
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "test",
+      "num_instances": 120,
+      "results": {
+        "shortcut_self_reported_fields": {
+          "translation_error_percent": 100.0,
+          "rotation_error_deg": 131.540395311039
+        }
+      }
+    }
+  }
+}

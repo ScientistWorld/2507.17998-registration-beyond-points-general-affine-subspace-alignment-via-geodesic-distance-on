@@ -1,0 +1,26 @@
+{
+  "_slice": "test",
+  "_failed_methods": {},
+  "experiments": {
+    "object_registration": {
+      "slice": "test",
+      "num_instances": 200,
+      "results": {
+        "shortcut_partial_regimes": {
+          "translation_error_percent": 52.41675568657771,
+          "rotation_error_deg": 64.34233064935093
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "test",
+      "num_instances": 120,
+      "results": {
+        "shortcut_partial_regimes": {
+          "translation_error_percent": 55.27771555209992,
+          "rotation_error_deg": 63.598149603226034
+        }
+      }
+    }
+  }
+}

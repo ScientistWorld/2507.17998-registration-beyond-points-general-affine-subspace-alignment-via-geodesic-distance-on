@@ -1,0 +1,26 @@
+{
+  "_slice": "train",
+  "_failed_methods": {},
+  "experiments": {
+    "object_registration": {
+      "slice": "train",
+      "num_instances": 200,
+      "results": {
+        "plane_parameter_lstsq": {
+          "translation_error_percent": 93.00859888811577,
+          "rotation_error_deg": 0.6868836939542922
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "train",
+      "num_instances": 120,
+      "results": {
+        "plane_parameter_lstsq": {
+          "translation_error_percent": 93.63921230106652,
+          "rotation_error_deg": 14.049759109056238
+        }
+      }
+    }
+  }
+}

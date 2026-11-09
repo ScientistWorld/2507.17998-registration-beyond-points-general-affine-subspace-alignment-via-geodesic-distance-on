@@ -1,0 +1,14 @@
+{
+  "attempt": "ablation_linear_init",
+  "split": "test",
+  "command": "bash scripts/evaluate_test.sh --details /home/user/redteam/hardening/results/ablation_linear_init/details_test.json",
+  "returncode": 0,
+  "seconds": 127.6,
+  "files_changed_during_run_then_restored": [
+    "scripts/solvers/ablation_linear_init.sh (removed)",
+    "scripts/solvers/plane_parameter_lstsq.sh",
+    "scripts/solvers/grassmann_refine.sh",
+    "scoring/scores_test.json"
+  ],
+  "hidden_test_files_modified_during_run": []
+}

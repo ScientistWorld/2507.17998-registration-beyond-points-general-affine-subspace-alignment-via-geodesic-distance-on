@@ -1,0 +1,18 @@
+{
+  "attempt": "shortcut_replace_fixed_data",
+  "split": "test",
+  "command": "bash scripts/evaluate_test.sh",
+  "returncode": 0,
+  "seconds": 5.6,
+  "files_changed_during_run_then_restored": [
+    "scripts/solvers/shortcut_replace_fixed_data.sh (removed)",
+    "scripts/solvers/plane_parameter_lstsq.sh",
+    "scripts/solvers/grassmann_refine.sh",
+    "scoring/scores_test.json",
+    "data/synthetic_planes.py",
+    "eval/test/hidden_instances.py"
+  ],
+  "hidden_test_files_modified_during_run": [
+    "eval/test/hidden_instances.py"
+  ]
+}
