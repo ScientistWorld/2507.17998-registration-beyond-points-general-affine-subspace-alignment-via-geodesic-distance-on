@@ -1,0 +1,12 @@
+{
+  "attempt": "plane_parameter_lstsq",
+  "split": "test",
+  "command": "bash scripts/evaluate_test.sh --details /home/user/redteam/hardening/results/plane_parameter_lstsq/details_test.json",
+  "returncode": 0,
+  "seconds": 82.1,
+  "files_changed_during_run_then_restored": [
+    "scripts/solvers/grassmann_refine.sh",
+    "scoring/scores_test.json"
+  ],
+  "hidden_test_files_modified_during_run": []
+}

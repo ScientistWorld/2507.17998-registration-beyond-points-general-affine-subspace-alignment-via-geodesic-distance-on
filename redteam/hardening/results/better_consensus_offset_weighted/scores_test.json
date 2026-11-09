@@ -1,0 +1,26 @@
+{
+  "_slice": "test",
+  "_failed_methods": {},
+  "experiments": {
+    "object_registration": {
+      "slice": "test",
+      "num_instances": 200,
+      "results": {
+        "better_consensus_offset_weighted": {
+          "translation_error_percent": 1.0013045414384758,
+          "rotation_error_deg": 0.7384156533043768
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "test",
+      "num_instances": 120,
+      "results": {
+        "better_consensus_offset_weighted": {
+          "translation_error_percent": 1.1663580661130624,
+          "rotation_error_deg": 0.7868003086319973
+        }
+      }
+    }
+  }
+}

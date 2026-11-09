@@ -1,0 +1,26 @@
+{
+  "_slice": "test",
+  "_failed_methods": {},
+  "experiments": {
+    "object_registration": {
+      "slice": "test",
+      "num_instances": 200,
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": 2.1900897381971585,
+          "rotation_error_deg": 0.7384984414846423
+        }
+      }
+    },
+    "object_registration_mismatched": {
+      "slice": "test",
+      "num_instances": 120,
+      "results": {
+        "grassmann_refine": {
+          "translation_error_percent": 13.165919496492522,
+          "rotation_error_deg": 1.5322095765697759
+        }
+      }
+    }
+  }
+}
