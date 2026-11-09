@@ -1,37 +1,11 @@
 #!/bin/bash
-# Visible train-slice evaluator for the plane-registration gym.
-#
-# Mirrors scripts/evaluate.sh: it reads pre-generated prediction JSON files
-# and writes a scores file, without importing or running code from method/.
-
-set -e
-
-cd /home/user
+# Visible train evaluation.  Same experiments, sizes, metrics and solver
+# contract as the hidden test, on instances from the public generator
+# (data/synthetic_planes.py) with a visible seed.  Writes
+# scoring/scores_train.json.  Optional arguments: solver names to score
+# (default: every solver registered in scripts/solvers/).
+set -euo pipefail
+cd "$(dirname "$0")/.."
 PYTHON_BIN="${PYTHON:-python3}"
-
 mkdir -p scoring
-
-if [ "${1:-}" = "--suite" ]; then
-  shift
-  if [ "$#" -gt 0 ] && [ -d "$1" ]; then
-    "${PYTHON_BIN}" eval/train/evaluate.py \
-      --suite \
-      --checkpoints-dir "$1" \
-      --output scoring/scores_train.json
-  else
-    "${PYTHON_BIN}" eval/train/evaluate.py \
-      --suite \
-      --output scoring/scores_train.json \
-      "$@"
-  fi
-else
-  if [ "$#" -gt 0 ] && [ -d "$1" ]; then
-    "${PYTHON_BIN}" eval/train/evaluate.py \
-      --checkpoints-dir "$1" \
-      --output scoring/scores_train.json
-  else
-    "${PYTHON_BIN}" eval/train/evaluate.py \
-      --output scoring/scores_train.json \
-      "$@"
-  fi
-fi
+exec "${PYTHON_BIN}" eval/train/evaluate.py --output scoring/scores_train.json "$@"

@@ -1,37 +1,13 @@
 #!/bin/bash
-# Held-out test-slice evaluator for the plane-registration gym.
+# Hidden test.  Run with no arguments.
 #
-# Scores the same method set as scoring/scores_train.json when that file is
-# present, using pre-generated prediction JSON files and no method imports.
-
-set -e
-
-cd /home/user
+# eval/test/evaluate.py generates the held-out registration instances (their
+# seed exists only in eval/test/), runs every solver registered in
+# scripts/solvers/ on the instance inputs alone, validates every returned pose
+# and writes scoring/scores_test.json.  Nothing a method writes is trusted:
+# every number is recomputed from the returned rotations and translations.
+set -euo pipefail
+cd "$(dirname "$0")/.."
 PYTHON_BIN="${PYTHON:-python3}"
-
 mkdir -p scoring
-
-if [ "${1:-}" = "--suite" ]; then
-  shift
-  if [ "$#" -gt 0 ] && [ -d "$1" ]; then
-    "${PYTHON_BIN}" eval/test/evaluate.py \
-      --suite \
-      --checkpoints-dir "$1" \
-      --output scoring/scores_test.json
-  else
-    "${PYTHON_BIN}" eval/test/evaluate.py \
-      --suite \
-      --output scoring/scores_test.json \
-      "$@"
-  fi
-else
-  if [ "$#" -gt 0 ] && [ -d "$1" ]; then
-    "${PYTHON_BIN}" eval/test/evaluate.py \
-      --checkpoints-dir "$1" \
-      --output scoring/scores_test.json
-  else
-    "${PYTHON_BIN}" eval/test/evaluate.py \
-      --output scoring/scores_test.json \
-      "$@"
-  fi
-fi
+exec "${PYTHON_BIN}" eval/test/evaluate.py --output scoring/scores_test.json "$@"

@@ -1,5 +1,11 @@
 # Scoring audit artifacts
 
+> **Superseded.** This audit (iteration 10) targets the pre-hardening gym: a single
+> visible instance scored from `checkpoints/` prediction files.  Those files and
+> evaluators no longer exist, so `run_all.sh` here no longer runs.  The hardened
+> gym's attempts live in [`hardening/`](hardening/) and are reported in
+> [`HARDENING.md`](../HARDENING.md).
+
 See [REDTEAM.md](../REDTEAM.md) for the findings, quality checks, seed spread,
 and one row per shortcut.
 

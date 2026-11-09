@@ -121,7 +121,12 @@ def fit_translation_linear(source: list[dict], target: list[dict], r: np.ndarray
 
 
 def _solve_with_fixed_rotation(
-    r: np.ndarray, t0: np.ndarray, source: list[dict], target: list[dict]
+    r: np.ndarray,
+    t0: np.ndarray,
+    source: list[dict],
+    target: list[dict],
+    loss: str = "soft_l1",
+    f_scale: float = 0.05,
 ) -> tuple[np.ndarray, float, int, bool]:
     rotvec = _matrix_to_rotvec(r)
 
@@ -131,8 +136,8 @@ def _solve_with_fixed_rotation(
     result = least_squares(
         residual_t,
         t0,
-        loss="soft_l1",
-        f_scale=0.05,
+        loss=loss,
+        f_scale=f_scale,
         max_nfev=300,
         xtol=1e-10,
         ftol=1e-10,
@@ -142,10 +147,10 @@ def _solve_with_fixed_rotation(
     return params, float(np.sum(residual_vector(params, source, target) ** 2)), int(result.nfev), bool(result.success)
 
 
-def run(input_path: Path, output_path: Path) -> None:
-    data = json.loads(input_path.read_text())
-    source = data["source"]
-    target = data["target"]
+def estimate(
+    source: list[dict], target: list[dict], loss: str = "soft_l1", f_scale: float = 0.05
+) -> dict:
+    """Register paired source/target planes; returns rotation, translation and cost."""
     normals_s = np.asarray([s["normal"] for s in source], dtype=float)
     normals_t = np.asarray([t["normal"] for t in target], dtype=float)
     r0 = _rotation_initial(normals_s, normals_t)
@@ -155,8 +160,8 @@ def run(input_path: Path, output_path: Path) -> None:
         residual_vector,
         x0,
         args=(source, target),
-        loss="soft_l1",
-        f_scale=0.05,
+        loss=loss,
+        f_scale=f_scale,
         max_nfev=500,
         xtol=1e-10,
         ftol=1e-10,
@@ -164,33 +169,35 @@ def run(input_path: Path, output_path: Path) -> None:
     )
     r_refined = _rotvec_to_matrix(result.x[:3])
     t_linear = fit_translation_linear(source, target, r_refined)
-    fixed_params, fixed_cost, fixed_nfev, fixed_success = _solve_with_fixed_rotation(
-        r_refined, t_linear, source, target
+    fixed_params, fixed_cost, _, _ = _solve_with_fixed_rotation(
+        r_refined, t_linear, source, target, loss, f_scale
     )
     full_cost = float(np.sum(residual_vector(result.x, source, target) ** 2))
     params = fixed_params if fixed_cost <= full_cost else result.x
-    r = _rotvec_to_matrix(params[:3])
-    cost = min(full_cost, fixed_cost)
-    payload = {
-        "method": "grassmann_refine",
-        "rotation": r.tolist(),
+    return {
+        "rotation": _rotvec_to_matrix(params[:3]).tolist(),
         "translation": params[3:6].tolist(),
-        "cost": cost,
-        "nfev": int(result.nfev + (fixed_nfev if fixed_cost <= full_cost else 0)),
-        "success": bool(result.success and (fixed_success if fixed_cost <= full_cost else True)),
-        "full_refine_cost": full_cost,
-        "fixed_rotation_cost": fixed_cost,
+        "cost": min(full_cost, fixed_cost),
     }
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(payload, indent=2))
+
+
+def run(problems_path: Path, predictions_path: Path) -> None:
+    """Solver contract: read a problems file, write one pose per instance id."""
+    instances = json.loads(problems_path.read_text())["instances"]
+    predictions = {}
+    for instance in instances:
+        pose = estimate(instance["source"], instance["target"])
+        predictions[instance["id"]] = {"rotation": pose["rotation"], "translation": pose["translation"]}
+    predictions_path.parent.mkdir(parents=True, exist_ok=True)
+    predictions_path.write_text(json.dumps({"method": "grassmann_refine", "predictions": predictions}))
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input", type=Path, default=Path("data/plane_registration.json"))
-    parser.add_argument("--output", type=Path, default=Path("checkpoints/grassmann_refine.json"))
+    parser = argparse.ArgumentParser(description="Affine-Grassmannian plane-to-plane registration solver.")
+    parser.add_argument("--problems", type=Path, required=True)
+    parser.add_argument("--predictions", type=Path, required=True)
     args = parser.parse_args()
-    run(args.input, args.output)
+    run(args.problems, args.predictions)
 
 
 if __name__ == "__main__":

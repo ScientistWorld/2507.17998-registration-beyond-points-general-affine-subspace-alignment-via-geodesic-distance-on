@@ -31,3 +31,14 @@ metric is invariant to sign ambiguity in vector parameters.  Secondary claims
 include robust inlier-set maximization with Branch-and-Bound and successful
 applications to RGB-D odometry, Perspective-n-Line, and correspondence-free
 localization.
+
+## What the Reference Solver Implements
+
+`scripts/solvers/grassmann_refine.sh` runs `method/grassmann.py`: a
+sign-invariant initial rotation (exhaustive normal-sign assignment with
+Kabsch alignment) and a linear translation from the orthogonal displacement
+vectors, followed by Levenberg-Marquardt-style least squares on the Eq. (7)
+plane-to-plane residuals with a soft-L1 loss and a fixed-rotation translation
+re-solve.  This is the paper's "Refine" path.  The Branch-and-Bound
+inlier-set maximization is not implemented, so correspondence outliers are
+handled only by the robust loss.

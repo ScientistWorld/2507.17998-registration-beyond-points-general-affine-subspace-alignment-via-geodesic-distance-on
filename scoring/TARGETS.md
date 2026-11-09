@@ -1,24 +1,38 @@
 # Evaluation Targets
 
-## Primary: synthetic_plane_registration
+Both experiments are scored on the hidden test (`bash scripts/evaluate_test.sh`,
+no arguments) and, on visible instances, by `bash scripts/evaluate.sh` and
+`bash scripts/evaluate_train.sh`.  Every metric is a mean over instances; lower
+is better.
 
-Tests whether a solver can recover the rigid transform between paired noisy
-planes in the object-registration setting.
+## object_registration (weight 0.6)
 
-- **Primary metric**: `translation_error_percent` (lower is better)
-- **Secondary metric**: `rotation_error_deg` (lower is better)
-- **Geometric consistency metric**: `plane_offset_rmse` (lower is better)
-- **Fixed scale metadata**: `num_planes` (reported to show the 13-plane
-  problem size; it is not a ranked score)
-- **How to run**: `bash scripts/reproduce.sh` or `bash scripts/evaluate.sh --suite`
+Recover the rigid transform from 13 paired noisy planes, 5-50% outlier points.
 
-## Additional Settings
+- **Primary metric**: `translation_error_percent` (coefficient 1.0) — the
+  paper's headline object-registration quantity.
+- **Constraint metric**: `rotation_error_deg` (coefficient 1.0) — the quantity
+  the paper's refinement trades away; scored at equal weight so a translation
+  gain cannot be bought with rotation accuracy.
+- Reference vs baseline: the reference must stay far below the signed
+  plane-parameter baseline in translation error while not losing rotation
+  accuracy against it.
 
-The suite also scores `synthetic_plane_registration_clean` and
-`synthetic_plane_registration_outlier_0.10`.  These use the same data
-generator, metrics, and 13-plane constraint while varying only the fitted-point
-outlier ratio.
+## object_registration_mismatched (weight 0.4)
 
-`scoring/scores.json` is the canonical full-instance score file.  The optional
-`scores_train.json` and `scores_test.json` files use fixed plane-index splits
-as supplemental diagnostics.
+Same task with 2-4 of the 13 plane pairings mismatched.
+
+- **Primary metric**: `translation_error_percent` (coefficient 1.0).
+- **Constraint metric**: `rotation_error_deg` (coefficient 1.0).
+- Purpose: robustness to outlier correspondences; this is where the reference
+  falls short and a better method can score higher.
+
+## Validity constraint (both experiments)
+
+Every instance must receive a finite proper rotation in SO(3) and a finite
+translation; otherwise the run scores 100% / 180 degrees on every metric of
+both experiments.
+
+Reference and baseline values are in `scoring/reference.json`; the reproduced
+values are in `scoring/scores_test.json` (hidden test), `scoring/scores_train.json`
+and `scoring/scores.json` (visible instances).

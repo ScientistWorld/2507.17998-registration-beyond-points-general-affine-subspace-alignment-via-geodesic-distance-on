@@ -1,135 +1,81 @@
 {
     "experiments": {
-        "synthetic_plane_registration_clean": {
-            "description": "Scaled Sec. 5.1 plane-to-plane registration without fitted-point outliers.",
-            "notes": "The paper reports the Space Station object-registration result as a curve rather than an extractable numeric table. These values are measured targets on this gym's fixed synthetic 13-plane analogue.",
-            "weight": 0.25,
+        "object_registration": {
+            "description": "Scaled analogue of the paper's Sec. 5.1 object registration: 13 paired planes fitted (RANSAC + least-squares refit) from 100 noisy point measurements each, 5/20/35/50 percent outlier points, random rigid transforms; scored on held-out instances.",
+            "notes": "PROVISIONAL values, replaced by the hardening job's measurements. The paper's Space Station model is not distributed and its Fig. 3 results are curves, so the results below are this gym's own measurements on its synthetic analogue; the paper's approximate curve readings are kept under _paper_reported_fig3_approx and are not on this gym's scale.",
+            "weight": 0.6,
             "primary_metric": "translation_error_percent",
             "metrics": {
                 "translation_error_percent": {
                     "higher_is_better": false,
-                    "coefficient": -1.0,
-                    "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
+                    "coefficient": 1.0,
+                    "description": "Mean over instances of ||t_hat - t_gt|| / ||t_gt|| * 100, each instance capped at 100 (no better than a zero-translation guess). A run with any invalid pose scores 100."
                 },
                 "rotation_error_deg": {
                     "higher_is_better": false,
-                    "coefficient": -0.5,
-                    "description": "Ground-truth SO(3) rotation error computed from acos((trace(R_hat^T R_gt)-1)/2), in degrees."
-                },
-                "plane_offset_rmse": {
-                    "higher_is_better": false,
-                    "coefficient": -0.4,
-                    "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
-                },
-                "num_planes": {
-                    "higher_is_better": false,
-                    "coefficient": 0.0,
-                    "description": "Number of input planes in the registration instance, reported as fixed problem-scale metadata rather than a ranked metric."
+                    "coefficient": 1.0,
+                    "description": "Mean over instances of acos((trace(R_hat^T R_gt) - 1) / 2) in degrees (at most 180). A run with any invalid pose scores 180."
                 }
             },
             "results": {
-                "plane_parameter_lstsq": {
-                    "type": "baseline",
-                    "translation_error_percent": 174.8654788409207,
-                    "rotation_error_deg": 0.1025112724127392,
-                    "plane_offset_rmse": 1.5408924780311934,
-                    "num_planes": 13.0
-                },
                 "grassmann_refine": {
                     "type": "proposed",
-                    "translation_error_percent": 0.2941367634019644,
-                    "rotation_error_deg": 0.10271678472052434,
-                    "plane_offset_rmse": 0.0044511454731466955,
-                    "num_planes": 13.0
+                    "translation_error_percent": 1.0,
+                    "rotation_error_deg": 0.5
+                },
+                "plane_parameter_lstsq": {
+                    "type": "baseline",
+                    "translation_error_percent": 95.0,
+                    "rotation_error_deg": 0.5
+                }
+            },
+            "_paper_reported_fig3_approx": {
+                "source": "Fig. 3 of the paper (Space Station model, 500 sets per outlier ratio), values read approximately from the plotted curves at 5% and 50% outliers and averaged over the plotted ratios 5-50%.",
+                "rotation_error_deg": {
+                    "LinEq": {"at_5pct": 1.75, "at_50pct": 1.93, "mean_5_50": 1.79},
+                    "Olsson": {"at_5pct": 2.9, "at_50pct": 4.8, "mean_5_50": 4.05},
+                    "Refine": {"at_5pct": 1.87, "at_50pct": 2.4, "mean_5_50": 2.06},
+                    "BnB": {"at_5pct": 1.73, "at_50pct": 1.9, "mean_5_50": 1.77}
+                },
+                "translation_error_percent": {
+                    "LinEq": {"at_5pct": 3.0, "at_50pct": 2.98, "mean_5_50": 2.85},
+                    "Olsson": {"at_5pct": 0.71, "at_50pct": 1.32, "mean_5_50": 1.08},
+                    "Refine": {"at_5pct": 0.57, "at_50pct": 0.71, "mean_5_50": 0.64},
+                    "BnB": {"at_5pct": 0.88, "at_50pct": 1.05, "mean_5_50": 0.98}
                 }
             }
         },
-        "synthetic_plane_registration": {
-            "description": "Scaled Sec. 5.1 plane-to-plane object registration with noisy fitted planes and antipodal parameter ambiguity.",
-            "notes": "The paper reports the Space Station object-registration result as a curve rather than an extractable numeric table. These values are measured targets on this gym's fixed synthetic 13-plane analogue with 5 percent fitted-point outliers.",
-            "weight": 0.5,
+        "object_registration_mismatched": {
+            "description": "Same object-registration task with 2, 3 or 4 of the 13 plane correspondences mismatched (targets cyclically permuted among the chosen planes), on top of 5/20/35/50 percent outlier points; scored on held-out instances.",
+            "notes": "PROVISIONAL values, replaced by the hardening job's measurements. Added where the paper's refinement falls short: the paper states that refining a linear solution depends on the initial solver filtering outlier correspondences, and reports Refine failing on the mismatch-heavy Replica Room1 sequence while its inlier-set-maximising BnB succeeds. The paper has no object-registration numbers for this setting.",
+            "weight": 0.4,
             "primary_metric": "translation_error_percent",
             "metrics": {
                 "translation_error_percent": {
                     "higher_is_better": false,
-                    "coefficient": -1.0,
-                    "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
+                    "coefficient": 1.0,
+                    "description": "Mean over instances of ||t_hat - t_gt|| / ||t_gt|| * 100, each instance capped at 100 (no better than a zero-translation guess). A run with any invalid pose scores 100."
                 },
                 "rotation_error_deg": {
                     "higher_is_better": false,
-                    "coefficient": -0.5,
-                    "description": "Ground-truth SO(3) rotation error computed from acos((trace(R_hat^T R_gt)-1)/2), in degrees."
-                },
-                "plane_offset_rmse": {
-                    "higher_is_better": false,
-                    "coefficient": -0.4,
-                    "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
-                },
-                "num_planes": {
-                    "higher_is_better": false,
-                    "coefficient": 0.0,
-                    "description": "Number of input planes in the registration instance, reported as fixed problem-scale metadata rather than a ranked metric."
+                    "coefficient": 1.0,
+                    "description": "Mean over instances of acos((trace(R_hat^T R_gt) - 1) / 2) in degrees (at most 180). A run with any invalid pose scores 180."
                 }
             },
             "results": {
-                "plane_parameter_lstsq": {
-                    "type": "baseline",
-                    "translation_error_percent": 172.1290020657259,
-                    "rotation_error_deg": 3.3800602318045705,
-                    "plane_offset_rmse": 1.3931699067919816,
-                    "num_planes": 13.0
-                },
                 "grassmann_refine": {
                     "type": "proposed",
-                    "translation_error_percent": 17.99285635059572,
-                    "rotation_error_deg": 4.194009977888098,
-                    "plane_offset_rmse": 0.15773638443875806,
-                    "num_planes": 13.0
-                }
-            }
-        },
-        "synthetic_plane_registration_outlier_0.10": {
-            "description": "Scaled Sec. 5.1 plane-to-plane registration with 10 percent fitted-point outliers.",
-            "notes": "The paper reports the Space Station object-registration result as a curve rather than an extractable numeric table. These values are measured targets on this gym's fixed synthetic 13-plane analogue with 10 percent fitted-point outliers.",
-            "weight": 0.25,
-            "primary_metric": "translation_error_percent",
-            "metrics": {
-                "translation_error_percent": {
-                    "higher_is_better": false,
-                    "coefficient": -1.0,
-                    "description": "Ground-truth translation error normalized by the translation magnitude; this is the headline registration accuracy metric."
+                    "translation_error_percent": 10.0,
+                    "rotation_error_deg": 5.0
                 },
-                "rotation_error_deg": {
-                    "higher_is_better": false,
-                    "coefficient": -0.5,
-                    "description": "Ground-truth SO(3) rotation error computed from acos((trace(R_hat^T R_gt)-1)/2), in degrees."
-                },
-                "plane_offset_rmse": {
-                    "higher_is_better": false,
-                    "coefficient": -0.4,
-                    "description": "Root-mean-square signed plane-offset residual after applying the predicted rigid transform to the scored slice."
-                },
-                "num_planes": {
-                    "higher_is_better": false,
-                    "coefficient": 0.0,
-                    "description": "Number of input planes in the registration instance, reported as fixed problem-scale metadata rather than a ranked metric."
+                "plane_parameter_lstsq": {
+                    "type": "baseline",
+                    "translation_error_percent": 95.0,
+                    "rotation_error_deg": 10.0
                 }
             },
-            "results": {
-                "plane_parameter_lstsq": {
-                    "type": "baseline",
-                    "translation_error_percent": 179.066168754142,
-                    "rotation_error_deg": 7.820490970992195,
-                    "plane_offset_rmse": 1.3994797533578942,
-                    "num_planes": 13.0
-                },
-                "grassmann_refine": {
-                    "type": "proposed",
-                    "translation_error_percent": 18.15448044662093,
-                    "rotation_error_deg": 5.956925451903087,
-                    "plane_offset_rmse": 0.1976498465408788,
-                    "num_planes": 13.0
-                }
+            "_paper_context": {
+                "replica_room1_line_registration": "Table 1, Rm1: Refine failed (no value); BnB APE_t 0.06 m, APE_r 3.14 deg; LinEq APE_t 0.91 m, APE_r 108.59 deg. Line-based odometry, not on this gym's scale."
             }
         }
     }

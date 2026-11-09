@@ -1,18 +1,7 @@
 #!/bin/bash
-# Run the paper's proposed method.
-#
-# This script trains/runs the paper's method using code in method/.
-#
-# Usage:
-#   bash scripts/method.sh
-
-set -e
-
-cd /home/user
-PYTHON_BIN="${PYTHON:-python3}"
-
-"${PYTHON_BIN}" data/synthetic_planes.py --output data/plane_registration.json
-"${PYTHON_BIN}" method/grassmann.py \
-  --input data/plane_registration.json \
-  --output checkpoints/grassmann_refine.json
-bash scripts/evaluate.sh checkpoints/grassmann_refine.json
+# Run the paper's method (affine-Grassmannian plane registration) on the
+# visible instances and score it into scoring/scores.json.
+# The method needs no training; its solver is scripts/solvers/grassmann_refine.sh.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+bash scripts/evaluate.sh grassmann_refine

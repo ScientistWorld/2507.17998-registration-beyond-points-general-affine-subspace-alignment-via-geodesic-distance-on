@@ -15,7 +15,6 @@ from itertools import product
 from pathlib import Path
 
 import numpy as np
-from scipy.spatial.transform import Rotation
 
 
 def _kabsch(a: np.ndarray, b: np.ndarray) -> np.ndarray:
@@ -43,12 +42,12 @@ def _rotation_initial(normals_s: np.ndarray, normals_t: np.ndarray) -> np.ndarra
     return best_r
 
 
-def run(input_path: Path, output_path: Path) -> None:
-    data = json.loads(input_path.read_text())
-    normals_s = np.asarray([s["normal"] for s in data["source"]], dtype=float)
-    signed_t = data["target_signed_parameters"]
+def estimate(instance: dict) -> tuple[np.ndarray, np.ndarray]:
+    """Signed plane-parameter registration of one instance."""
+    normals_s = np.asarray([s["normal"] for s in instance["source"]], dtype=float)
+    signed_t = instance["target_signed_parameters"]
     normals_t = np.asarray([p["normal"] for p in signed_t], dtype=float)
-    offsets_s = np.asarray([np.linalg.norm(s["displacement"]) for s in data["source"]], dtype=float)
+    offsets_s = np.asarray([np.linalg.norm(s["displacement"]) for s in instance["source"]], dtype=float)
     offsets_t = np.asarray([p["offset"] for p in signed_t], dtype=float)
 
     r = _rotation_initial(normals_s, normals_t)
@@ -57,29 +56,27 @@ def run(input_path: Path, output_path: Path) -> None:
     # against the selected target offset.  If an equivalent target plane is
     # represented by the antipodal parameter, this least-squares system asks
     # translation to satisfy an incompatible offset equation.
-    rows = rotated_normals
-    vals = offsets_t - offsets_s
-    t = np.linalg.lstsq(rows, vals, rcond=None)[0]
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(
-        json.dumps(
-            {
-                "method": "plane_parameter_lstsq",
-                "rotation": r.tolist(),
-                "translation": t.tolist(),
-                "rotvec": Rotation.from_matrix(r).as_rotvec().tolist(),
-            },
-            indent=2,
-        )
-    )
+    t = np.linalg.lstsq(rotated_normals, offsets_t - offsets_s, rcond=None)[0]
+    return r, t
+
+
+def run(problems_path: Path, predictions_path: Path) -> None:
+    """Solver contract: read a problems file, write one pose per instance id."""
+    instances = json.loads(problems_path.read_text())["instances"]
+    predictions = {}
+    for instance in instances:
+        r, t = estimate(instance)
+        predictions[instance["id"]] = {"rotation": r.tolist(), "translation": t.tolist()}
+    predictions_path.parent.mkdir(parents=True, exist_ok=True)
+    predictions_path.write_text(json.dumps({"method": "plane_parameter_lstsq", "predictions": predictions}))
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input", type=Path, default=Path("data/plane_registration.json"))
-    parser.add_argument("--output", type=Path, default=Path("checkpoints/plane_parameter_lstsq.json"))
+    parser = argparse.ArgumentParser(description="Signed plane-parameter least-squares baseline solver.")
+    parser.add_argument("--problems", type=Path, required=True)
+    parser.add_argument("--predictions", type=Path, required=True)
     args = parser.parse_args()
-    run(args.input, args.output)
+    run(args.problems, args.predictions)
 
 
 if __name__ == "__main__":

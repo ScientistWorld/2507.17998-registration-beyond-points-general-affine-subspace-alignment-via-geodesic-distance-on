@@ -17,4 +17,4 @@
 set -e
 
 PYTHON_BIN="${PYTHON:-python3}"
-uv pip install --system --python "${PYTHON_BIN}" numpy scipy
+uv pip install --system --python "${PYTHON_BIN}" numpy==2.4.6 scipy==1.17.1

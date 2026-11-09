@@ -1,21 +1,24 @@
 # Experiment Overview
 
-## synthetic_plane_registration
+Both experiments are scored on held-out registration instances through the
+hidden test; the visible train instances come from the same generator with a
+different seed.  Each reports mean rotation error (degrees) and mean
+translation error (percent of the true translation norm, capped at 100).
 
-Tests whether a geometric registration system can estimate an accurate rigid
-transform from paired planes when the measurements are noisy and equivalent
-plane representations may be signed inconsistently.  The experiment captures
-the central object-registration question from the paper at a scale that is
-small enough to run quickly in this reusable environment.
+## object_registration
 
-## synthetic_plane_registration_clean
+Tests whether a solver recovers an accurate rigid transform from 13 paired
+planes when the observed planes are fitted from noisy point measurements
+contaminated by 5 to 50 percent outlier points, and the observed planes'
+vector descriptions have arbitrary signs.  This is the gym's analogue of the
+paper's object-registration experiment.  It establishes accuracy under
+measurement noise and representation ambiguity, in rotation and translation
+jointly, so that a gain in one cannot hide a loss in the other.
 
-Checks the same registration task when plane measurements have Gaussian noise
-but no fitted-point outliers.  This verifies that a method handles the
-representation ambiguity without relying on outlier difficulty.
+## object_registration_mismatched
 
-## synthetic_plane_registration_outlier_0.10
-
-Repeats the same registration task with a higher fitted-point outlier ratio.
-This probes whether the recovered transform remains useful when the target
-plane estimates are more corrupted.
+Same task, but 2, 3 or 4 of the 13 plane pairings are wrong.  Tests whether a
+solver stays accurate when part of the given correspondences are outliers
+rather than noisy inliers.  This is where accuracy on clean correspondences
+does not carry over by itself, and it leaves room above the included reference
+solver.

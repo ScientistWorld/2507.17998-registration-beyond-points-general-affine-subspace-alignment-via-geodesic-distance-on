@@ -1,33 +1,82 @@
 # Evaluation
 
+## Solver contract
+
+A method is a *solver*: an executable script `scripts/solvers/<name>.sh`
+called as
+
+    bash scripts/solvers/<name>.sh <problems.json> <predictions.json>
+
+Every script in `scripts/solvers/` is scored as method `<name>` (files starting
+with `_` or `.` are ignored).  `problems.json` holds the inputs only:
+
+```json
+{"format": "plane-registration-problems/v1",
+ "instances": [{"id": "inst-0000",
+                "source": [{"basis": [[..],[..],[..]], "displacement": [..], "normal": [..]}, ... 13 planes],
+                "target": [ ... same fields, 13 planes ... ],
+                "target_signed_parameters": [{"normal": [..], "offset": ..}, ... 13 planes]}, ...]}
+```
+
+`source[i]` is an exact model plane and `target[i]` the plane fitted to the
+sensor measurements that were paired with it.  `basis` is a 3x2 orthonormal
+in-plane basis (rows are x, y, z), `displacement` the foot of the
+perpendicular from the origin, and the target normal sign follows
+`normal . displacement >= 0`.  `target_signed_parameters` describes the same
+fitted target planes as `(normal, offset)` with an arbitrary sign per plane.
+The solver writes
+
+```json
+{"predictions": {"inst-0000": {"rotation": [[..],[..],[..]], "translation": [..]}, ...}}
+```
+
+with `x_target = R x_source + t`.  The solver must answer every instance with a
+finite proper rotation (`||R^T R - I||_F <= 1e-6`, `det R > 0`) and a finite
+translation.  If the solver exits non-zero, times out (3 h), omits any
+instance, or returns any invalid pose, the whole run is scored as failed: the
+worst value of every metric in every experiment (100% and 180 degrees).  Any
+other field in the predictions file is ignored.
+
 ## Metrics
 
-The evaluator reads predicted rigid transforms from JSON files in
-`checkpoints/` and compares them with the ground-truth transform stored in the
-dataset JSON.
+Per instance, rotation error is `acos((trace(R_hat^T R_gt) - 1) / 2)` in
+degrees and translation error is `||t_hat - t_gt|| / ||t_gt|| * 100`, capped
+at 100 (a zero-translation guess).  Each experiment reports the mean over its
+instances.  Lower is better for both; they carry equal coefficients.
 
-Rotation error is `acos((trace(R_hat^T R_gt)-1)/2)` in degrees.  Translation
-error is `||t_hat - t_gt|| / ||t_gt|| * 100`.  The evaluator also reports
-root-mean-square plane-offset residuals after applying the predicted transform.
-Lower is better for all three scored metrics.  The number of plane
-correspondences is reported as fixed problem-scale metadata.
+## Experiments and data
 
-## Baselines and Targets
+Instances come from `data/synthetic_planes.py`: a fixed 13-plane object, a
+uniformly random rotation and a translation of norm 1.5-3, 100 point
+measurements per plane with Gaussian noise (sigma 0.05), of which 5, 20, 35 or
+50 percent are outliers drawn uniformly from a cube of side 20 around the
+transformed object, and each target plane fitted from its own measurements
+with RANSAC and a least-squares refit on the inliers.
 
-The paper reports object-registration results as curves rather than an
-extractable numeric table.  The gym therefore uses a scaled synthetic analogue
-of the paper's object-registration experiment, and `scoring/reference.json`
-records expected behavior on this fixed synthetic instance rather than literal
-paper table entries.  A successful primitive-registration solver should
-recover a low-error rigid transform on the same data while remaining robust to
-equivalent plane descriptions with inconsistent normal signs.
+| experiment | instances | what varies |
+|---|---:|---|
+| `object_registration` | 200 | outlier ratio 5/20/35/50% (all pairings correct) |
+| `object_registration_mismatched` | 120 | outlier ratio as above, plus 2, 3 or 4 of the 13 plane pairings mismatched |
 
-## Evaluation Protocol
+Instances of both experiments are shuffled together under opaque ids.
 
-Run `bash scripts/reproduce.sh` to generate the fixed synthetic dataset,
-produce the included reference outputs, and write `scoring/scores.json`.  Run
-`bash scripts/evaluate.sh` to rescore existing outputs.  Any method can be
-evaluated by writing prediction JSON files containing a method name, rotation
-matrix, and translation vector under `checkpoints/`.  The default dataset uses
-13 planes, 100 sampled points per plane, Gaussian noise with sigma 0.05, and 5
-percent outlier-corrupted samples during target plane fitting.
+## Protocol
+
+- `bash scripts/evaluate.sh [names...]` scores registered solvers on the visible
+  train instances (fixed seed in `eval/train/evaluate.py`) into
+  `scoring/scores.json`; `bash scripts/evaluate_train.sh` does the same into
+  `scoring/scores_train.json`.
+- The hidden test (`bash scripts/evaluate_test.sh`, no arguments) runs every
+  registered solver on held-out instances drawn from the same distribution
+  with a seed that is not visible, at the same sizes, and writes
+  `scoring/scores_test.json`.  It does not train anything; it runs the solvers.
+- Every method sees exactly the same instances, so methods are compared on
+  paired inputs.
+
+## Baselines and targets
+
+`scoring/reference.json` lists this gym's measured hidden-test values for the
+included solvers: `plane_parameter_lstsq` (a least-squares solver on signed
+plane parameters) and the reference solver.  The paper's own object-registration
+results are curves on a different model and scale; approximate readings are kept
+under `_paper_reported_fig3_approx` for context only.

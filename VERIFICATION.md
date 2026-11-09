@@ -1,5 +1,8 @@
 # Verification Report
 
+> Predates the iteration-11 redesign of the evaluation (see `HARDENING.md`);
+> the evaluator, data and score files described below were replaced.
+
 ## Initial Assessment
 
 The workspace started at `core_claim_plus` with a working plane-to-plane

@@ -1,21 +1,27 @@
 # Train/Test Evaluation Design Notes
 
-## Checks performed
+Current design (iteration 11, hardening; see `HARDENING.md` for the evidence).
 
-- Read `scripts/evaluate_train.sh` and `scripts/evaluate_test.sh` side by side. The train wrapper calls `eval/train/evaluate.py` and writes `scoring/scores_train.json`; the test wrapper calls `eval/test/evaluate.py` and writes `scoring/scores_test.json`.
-- Grepped the train/test evaluator code for cross-imports and hardcoded method defaults. The split evaluators discover prediction JSON files from `checkpoints/` and do not import from `method/`.
-- Grepped `scoring/reference.json` and split evaluator code for paper-agreement metric names. No forbidden paper-fit metrics were found.
-- Confirmed `scoring/scores_train.json` and `scoring/scores_test.json` are absent.
-- Ran `bash -n` on both train/test wrapper scripts.
+- The method needs no training, so both evaluators *run* every solver
+  registered in `scripts/solvers/<name>.sh` on a problems file that contains
+  instance inputs only, then score the returned poses against ground truth
+  that stays inside the evaluator process.
+- Train (`eval/train/evaluate.py`) generates its instances with the public
+  generator `data/synthetic_planes.py` from a visible seed.  Test
+  (`eval/test/evaluate.py`) generates its instances with a frozen copy of the
+  generator (`eval/test/hidden_instances.py`) from a seed that exists only in
+  `eval/test/`.  The two evaluators share no code and use identical
+  experiments, sizes (200 + 120 instances), metrics and validation.
+- Validation: one pose per instance, finite, rotation in SO(3)
+  (`||R^T R - I||_F <= 1e-6`, `det > 0`).  Any violation, crash or timeout fails
+  the whole run at the metric caps (100% translation, 180 degrees rotation).
+- Metrics are the paper's pose errors against ground truth (rotation geodesic
+  angle, relative translation error capped at 100%), averaged per experiment.
+- `scripts/evaluate_test.sh` takes no arguments; `--details <path>` is an
+  optional diagnostic dump that does not change scores.
 
-## Changes made
-
-- Added `plane_offset_rmse` to both train and test evaluators. This scores the predicted rigid transform against the split-local plane geometry, adding a residual-based angle that a method overfit to the visible translation/rotation metrics must also satisfy on held-out planes.
-- Changed split evaluator `num_planes` from the number of scored split indices to the full input plane count. This removes an artificial train/test difference where train emitted 7 and test emitted 6 for a method-independent resource-scale metric.
-- Updated `scoring/reference.json` metric definitions with required descriptions, added `plane_offset_rmse`, and reduced `num_planes` to a small coefficient so it is context rather than a dominant score term.
-
-## Runtime concerns for the next iteration
-
-- The data files include `ground_truth`, and the existing prediction-artifact workflow scores already generated transforms. A future shortcut method could read visible ground truth while producing predictions; the current held-out split catches overfitting to visible plane indices but cannot fully defend against label leakage from the data files. A stronger runner-stage design would need hidden synthetic instances or a method invocation path that produces predictions on data without exposed ground truth.
-- `plane_offset_rmse` was added statically but not exercised here, per this iteration's no-experiment rule. The runner iteration should confirm the metric is present in both `scores_train.json` and `scores_test.json` for `--suite` and does not saturate on the current reproduction.
-- The test evaluator intentionally filters to methods present in `scoring/scores_train.json` when that file exists. The runner should verify this matches the intended final harness behavior when a future agent evaluates only a subset of methods.
+Superseded design (iterations 4-10): a single visible synthetic instance whose
+plane indices were split into "train" and "test" halves, with prediction JSON
+files under `checkpoints/`.  It exposed the ground truth, scored only one of
+three weighted experiments through the no-argument entry point, and accepted
+non-rigid or non-finite outputs; see `REDTEAM.md`.

@@ -1,5 +1,19 @@
 # Progress
 
+## Iteration 11 (hardening) — current state
+
+The evaluation was rebuilt (see `HARDENING.md`, `DESIGN_NOTES.md`).  The method
+needs no training, so every solver registered in `scripts/solvers/` is run by
+the evaluators on registration instances that are generated at evaluation time:
+visible train instances from `data/synthetic_planes.py`, hidden test instances
+inside `eval/test/` from a seed that exists only there.  Scored metrics are the
+paper's rotation and translation errors against ground truth on two
+experiments: `object_registration` (13 RANSAC-fitted planes, 5-50% outlier
+points) and `object_registration_mismatched` (2-4 of 13 plane pairings wrong).
+`method/grassmann.py` (paper's Eq. 7 refinement) and
+`baseline/plane_parameter.py` keep their math and gained a batch solver
+interface.  The sections below describe earlier iterations.
+
 ## What Works
 
 Implemented the core plane-to-plane affine Grassmannian projection residual

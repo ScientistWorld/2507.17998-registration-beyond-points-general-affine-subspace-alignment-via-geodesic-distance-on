@@ -1,8 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: pending
+action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: ""
+notes: "Hardening check: rebuilt hidden test (hidden seeded instances, solver contract, SO(3) validation, paper pose metrics, mismatched-correspondence headroom experiment); reproduce reference+baseline on train/test, then run better/weaker variants and 16 shortcuts through the no-arg hidden test."

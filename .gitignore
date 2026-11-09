@@ -231,3 +231,6 @@ tmp/
 protocol.md
 *.egg-info
 core.[0-9]*
+
+# Hardening harness cache (reference poses keyed by problems-file hash)
+redteam/hardening/results/_cache/
